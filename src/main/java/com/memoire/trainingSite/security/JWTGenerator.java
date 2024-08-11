@@ -1,5 +1,5 @@
 package com.memoire.trainingSite.security;
-
+/*
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -49,3 +49,4 @@ public String generateToken(Authentication authentication){
     }
 
 }
+*/

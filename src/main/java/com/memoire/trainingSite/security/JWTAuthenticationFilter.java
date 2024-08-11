@@ -1,5 +1,5 @@
 package com.memoire.trainingSite.security;
-
+/*
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -58,3 +58,4 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 }
+*/

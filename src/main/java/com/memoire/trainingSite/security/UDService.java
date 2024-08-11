@@ -1,5 +1,5 @@
 package com.memoire.trainingSite.security;
-
+/*
 import com.memoire.trainingSite.DAO.SiteUserRepo;
 import com.memoire.trainingSite.models.SiteUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,3 +37,4 @@ public class UDService implements UserDetailsService {
     }
 
 }
+*/

@@ -1,5 +1,5 @@
 package com.memoire.trainingSite.security;
-
+/*
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,3 +17,4 @@ public class JWTAuthEntryPoint implements AuthenticationEntryPoint{
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED , authException.getMessage());
     }
 }
+*/

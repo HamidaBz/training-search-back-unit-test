@@ -1,6 +1,14 @@
 package com.memoire.trainingSite.Services;
 
+import com.memoire.trainingSite.DAO.ApplicantRepo;
+import com.memoire.trainingSite.DAO.CompanyRepo;
 import com.memoire.trainingSite.DAO.SiteUserRepo;
+import com.memoire.trainingSite.DTO.UserResponseDTO;
+import com.memoire.trainingSite.mappers.ApplicantDTOMapper;
+import com.memoire.trainingSite.mappers.CompanyDTOMapper;
+import com.memoire.trainingSite.mappers.SiteUserDTOMapper;
+import com.memoire.trainingSite.models.Applicant;
+import com.memoire.trainingSite.models.Company;
 import com.memoire.trainingSite.models.SiteUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +34,11 @@ public class SiteUserService {
         return siteUserRepo.findAll() ;
     }
 
-    public Optional<SiteUser> getById(Long id) {
+    public Optional<SiteUser> getUserById(Long id) {
         return siteUserRepo.findById(id) ;
     }
+
+
 
     public SiteUser updateUser(Long id, SiteUser siteUser) {
 

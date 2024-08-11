@@ -1,10 +1,14 @@
 package com.memoire.trainingSite.Controller;
 
+import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
+import com.memoire.trainingSite.DTO.UserResponseDTO;
 import com.memoire.trainingSite.Services.SiteUserService;
 import com.memoire.trainingSite.models.SiteUser;
 import com.memoire.trainingSite.models.UserStatus;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,8 +34,10 @@ public class SiteUserController {
     }
     @GetMapping("/{id}")
     public Optional<SiteUser> getUserById(@PathVariable Long id){
-        return  siteUserService.getById(id);
+        return  siteUserService.getUserById(id);
     }
+
+    
     @PostMapping("/new")
     public SiteUser createUser(@RequestBody SiteUser siteUser) {
         return siteUserService.createUser(siteUser) ;

@@ -1,13 +1,10 @@
 package com.memoire.trainingSite.Services;
 
 import com.memoire.trainingSite.DAO.CompanyRepo;
-import com.memoire.trainingSite.DAO.SiteUserRepo;
 import com.memoire.trainingSite.DTO.CompanyDTO;
 import com.memoire.trainingSite.mappers.CompanyDTOMapper;
 import com.memoire.trainingSite.models.Company;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +29,7 @@ public class CompanyService {
     }
 
 
-    public CompanyDTO getCompany(Long id) {
+    public CompanyDTO getCompanyById(Long id) {
         return companyRepo.findById(id).map(companyDTOMapper::toDTO).orElseThrow(() -> new IllegalArgumentException( id + " does not exist"));
     }
     public List<CompanyDTO> getCompanies() {

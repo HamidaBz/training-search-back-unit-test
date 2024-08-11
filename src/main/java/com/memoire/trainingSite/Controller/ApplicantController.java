@@ -1,9 +1,11 @@
 package com.memoire.trainingSite.Controller;
 
 import com.memoire.trainingSite.DTO.ApplicantDTO;
+import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
+import com.memoire.trainingSite.DTO.UserResponseDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
-import com.memoire.trainingSite.Services.SiteUserService;
 import com.memoire.trainingSite.models.Applicant;
+import com.memoire.trainingSite.models.Company;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,60 +13,63 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/applicants")
+@RequestMapping("/v1/applicants")
 public class ApplicantController {
+    private final ApplicantService applicantService;
+    @Autowired
+    public ApplicantController(ApplicantService applicantService) {
+        this.applicantService = applicantService;
+    }
+    @GetMapping
+    public ResponseEntity<List<ApplicantResponseDTO>> getApplicants() {
+        List<ApplicantResponseDTO> applicants = applicantService.getApplicants();
+        return new ResponseEntity<>(applicants, HttpStatus.OK);
+    }
 
 
-        private final ApplicantService applicantService;
-        @Autowired
-        public ApplicantController(ApplicantService applicantService ) {
-            this.applicantService = applicantService;
+    @PostMapping
+    public ResponseEntity<ApplicantResponseDTO> createApplicant(@RequestBody ApplicantDTO applicant) {
+        Optional<ApplicantResponseDTO> createdApplicant = applicantService.createApplicant(applicant);
+        if(createdApplicant.isPresent()) {
+            return new ResponseEntity<>(createdApplicant.get(), HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<>(null, HttpStatus.FOUND);
         }
-        @GetMapping
-        public ResponseEntity<List<ApplicantDTO>> getApplicants() {
-            List<ApplicantDTO> applicants = applicantService.getApplicants();
-            if (applicants.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } else {
-                return new ResponseEntity<>(applicants, HttpStatus.OK);
-            }
 
-        }
+    }
 
-        //return response entity for all the methods
-
-
-    @PostMapping("/new")
-    public ResponseEntity<Applicant> createApplicant(@RequestBody Applicant applicant) {
-        Applicant createdApplicant = applicantService.createApplicant(applicant);
-        if (createdApplicant == null) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    @GetMapping("/{applicantId}")
+    public ResponseEntity<ApplicantResponseDTO> getApplicantById(@PathVariable Long applicantId) {
+        Optional<ApplicantResponseDTO> applicant = applicantService.getApplicant(applicantId);
+        if (applicant.isPresent()) {
+            return new ResponseEntity<>(applicant.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(createdApplicant, HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApplicantDTO> getApplicant(@PathVariable Long id) {
-        ApplicantDTO applicant = applicantService.getApplicant(id);
-        if (applicant == null) {
+    @PutMapping("/{applicantId}")
+    public ResponseEntity<ApplicantResponseDTO> updateApplicant(@PathVariable Long applicantId, @RequestBody ApplicantDTO applicant) {
+        Optional<ApplicantResponseDTO> updatedApplicant = applicantService.updateApplicant(applicantId, applicant);
+        if (!updatedApplicant.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(applicant, HttpStatus.OK);
+            return new ResponseEntity<>(updatedApplicant.get(), HttpStatus.OK);
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Applicant> updateApplicant(@PathVariable Long id, @RequestBody Applicant applicant) {
-        Applicant updatedApplicant = applicantService.updateApplicant(id, applicant);
-        if (updatedApplicant == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(updatedApplicant, HttpStatus.OK);
+    @GetMapping("/search")
+    public ResponseEntity<ApplicantResponseDTO> getApplicantByUserName(@RequestParam String username){
+        Optional<ApplicantResponseDTO>  applicant = applicantService.getApplicantByUsername(username);
+        if(applicant.isPresent()){
+            return new ResponseEntity<>(applicant.get(),HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-}
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteApplicant(@PathVariable Long id) {
@@ -75,12 +80,12 @@ public class ApplicantController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-        
 
-        @PostConstruct
-        public void init() {
-            applicantService.createApplicant(new Applicant());
-        }
-    }
+
+   /* @PostConstruct
+    public void init() {
+        applicantService.createApplicant(new ApplicantDTO());
+    }*/
+}
 
 

@@ -1,5 +1,5 @@
 package com.memoire.trainingSite.security;
-
+/*
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
@@ -14,3 +14,4 @@ public class SecurityConstants {
     }
 
 }
+*/

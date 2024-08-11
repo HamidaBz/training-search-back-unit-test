@@ -1,7 +1,9 @@
 package com.memoire.trainingSite.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "SiteUser")
 public class SiteUser {
     @Id
@@ -44,4 +48,14 @@ public class SiteUser {
             inverseJoinColumns = @JoinColumn(name = "role_id" , referencedColumnName = "id")
     )
     private List<Role> roles = new ArrayList<>();
+
+    public SiteUser(Long user_id, String username, String user_password, LocalDateTime user_join_date, UserStatus user_status, String user_phone_number, String email) {
+        this.user_id = user_id;
+        this.username = username;
+        this.user_password = user_password;
+        this.user_join_date = user_join_date;
+        this.user_status = user_status;
+        this.user_phone_number = user_phone_number;
+        this.email = email;
+    }
 }

@@ -1,5 +1,5 @@
 package com.memoire.trainingSite.Controller;
-
+/*
 import com.memoire.trainingSite.DAO.RoleRepo;
 import com.memoire.trainingSite.DAO.SiteUserRepo;
 import com.memoire.trainingSite.DTO.AuthResponseDTO;
@@ -82,3 +82,4 @@ public class AuthController {
     }
 
 }
+*/
