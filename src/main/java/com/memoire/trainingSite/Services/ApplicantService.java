@@ -29,13 +29,10 @@ public class ApplicantService {
     }
 
     public Optional<ApplicantResponseDTO> createApplicant(ApplicantDTO applicantDTO){
-        System.out.println(applicantDTO);
         Applicant applicant = applicantDTOMapper.toEntity(applicantDTO);
-        System.out.println(applicant);
         if(!applicantRepo.existsByUsername(applicant.getUsername())) {
             return Optional.of(applicantDTOMapper.toResponseDTO(applicantRepo.save(applicant)));
         }else{
-            System.out.println("applicant exists");
             return Optional.empty();
         }
 

@@ -2,50 +2,98 @@ package com.memoire.trainingSite.services;
 
 import com.memoire.trainingSite.DAO.ApplicantRepo;
 import com.memoire.trainingSite.DTO.ApplicantDTO;
+import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
 import com.memoire.trainingSite.mappers.ApplicantDTOMapper;
+import com.memoire.trainingSite.models.Applicant;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
-
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ApplicantServiceTest {
-
-    //@Autowired
-    //MockMvc mockMvc;
+    @Mock
+    ApplicantRepo applicantRepo;
+    @Mock
+    ApplicantDTOMapper applicantDTOMapper;
     @InjectMocks
     ApplicantService applicantService;
 
-    @MockBean
-    ApplicantRepo applicantRepo;
-    @Autowired
-    ApplicantDTOMapper applicantDTOMapper;
-
     @Test
-    public void unique_username_for_applicants(){
+    void create_applicant_if_no_applicant_with_this_username_exists() {
         //given
+        ApplicantDTO applicantDTO = new ApplicantDTO();
+        applicantDTO.setUsername("user1");
+        String username = "user1";
 
-        ApplicantDTO applicant1 = new ApplicantDTO();
-        //applicant1.setUsername("user1");
-        System.out.println("concerne "+applicant1);
+        Applicant applicant = new Applicant();
+        applicant.setUsername(username);
 
-        // Mock the service to return a specific response
-        when(applicantService.createApplicant(applicant1)).
-                thenReturn(Optional.of(applicantDTOMapper.toResponseDTO(applicantDTOMapper.toEntity(applicant1))));
+        ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO();
+        applicantResponseDTO.setUsername(username);
 
-        // thenReturn(Optional.empty());
 
-        // Mock the service to throw an exception or return a conflict status
-        // when(applicantService.createApplicant(applicant2)).thenThrow(new RuntimeException("Username already exists"));
+        when(applicantDTOMapper.toEntity(applicantDTO)).thenReturn(applicant);
+        when(applicantRepo.existsByUsername(username)).thenReturn(false);
+        when(applicantDTOMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
 
+        //when
+        Optional<ApplicantResponseDTO>  applicantResponseDTOOpt= applicantService.createApplicant(applicantDTO);
+        //then
+        verify(applicantRepo).existsByUsername(applicant.getUsername());
+        verify(applicantRepo).save(applicant);
+        assertThat(applicantResponseDTOOpt).isPresent();
     }
 
+    @Test
+    void donot_create_applicant_if_an_applicant_with_this_username_exists() {
+        //given
+        ApplicantDTO applicantDTO = new ApplicantDTO();
+        applicantDTO.setUsername("user1");
+        String username = "user1";
+
+        Applicant applicant = new Applicant();
+        applicant.setUsername(username);
+
+        when(applicantDTOMapper.toEntity(applicantDTO)).thenReturn(applicant);
+        when(applicantRepo.existsByUsername(username)).thenReturn(true);
+
+        //when
+        Optional<ApplicantResponseDTO>  applicantResponseDTO= applicantService.createApplicant(applicantDTO);
+        //then
+        verify(applicantRepo).existsByUsername(applicant.getUsername());
+        assertThat(applicantResponseDTO).isEmpty();
+    }
+
+    @Test
+    @Disabled
+    void getApplicant() {
+    }
+
+    @Test
+    @Disabled
+    void getApplicantByUsername() {
+    }
+
+    @Test
+    @Disabled
+    void getApplicants() {
+    }
+
+    @Test
+    @Disabled
+    void updateApplicant() {
+    }
+
+    @Test
+    @Disabled
+    void deleteApplicant() {
+    }
 }

@@ -29,7 +29,6 @@ public class ApplicantControllerTest {
     private ApplicantService applicantService; // Mock the service
     @MockBean
     private ApplicantDTOMapper applicantDTOMapper;
-
     @Autowired
     private ObjectMapper objectMapper; // Used to convert the object to JSON
 
