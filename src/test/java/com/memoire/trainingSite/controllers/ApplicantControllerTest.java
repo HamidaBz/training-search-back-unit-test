@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.memoire.trainingSite.Controller.ApplicantController;
 import com.memoire.trainingSite.DTO.ApplicantDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
-import com.memoire.trainingSite.mappers.ApplicantDTOMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,9 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.Optional;
-
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,8 +23,6 @@ public class ApplicantControllerTest {
 
     @MockBean
     private ApplicantService applicantService; // Mock the service
-    @MockBean
-    private ApplicantDTOMapper applicantDTOMapper;
     @Autowired
     private ObjectMapper objectMapper; // Used to convert the object to JSON
 

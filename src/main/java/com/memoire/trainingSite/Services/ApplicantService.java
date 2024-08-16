@@ -1,18 +1,13 @@
 package com.memoire.trainingSite.Services;
 
 import com.memoire.trainingSite.DAO.ApplicantRepo;
-import com.memoire.trainingSite.DAO.SiteUserRepo;
 import com.memoire.trainingSite.DTO.ApplicantDTO;
 import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
-import com.memoire.trainingSite.DTO.UserResponseDTO;
 import com.memoire.trainingSite.mappers.ApplicantDTOMapper;
 import com.memoire.trainingSite.models.Applicant;
-import com.memoire.trainingSite.models.Company;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,13 +47,12 @@ public class ApplicantService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<ApplicantResponseDTO> updateApplicant(Long id, ApplicantDTO updatedApplicant) {
+    public Optional<ApplicantResponseDTO> updateApplicant(Long id, ApplicantDTO updatedApplicantDTO) {
         Optional<Applicant> applicant =  applicantRepo.findById(id);
 
         if(applicant.isPresent()){
-            applicant.get().setApplicant_firstname(updatedApplicant.getApplicant_firstname());
-            applicant.get().setApplicant_lastname(updatedApplicant.getApplicant_lastname());
-            applicantRepo.save(applicant.get());
+            Applicant  updatedApplicant = applicantDTOMapper.toEntity(updatedApplicantDTO);
+            applicantRepo.save(updatedApplicant);
         }
         return applicant.map(applicantDTOMapper::toResponseDTO);
     }

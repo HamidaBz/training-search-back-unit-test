@@ -5,9 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import java.util.Optional;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 class ApplicantRepoTest {
@@ -21,7 +19,7 @@ class ApplicantRepoTest {
     }
 
     @Test
-    void itShouldCheckIfApplicantUsernameExists() {
+    public void itShouldCheckIfApplicantUsernameExists() {
         //given
         Applicant applicant = new Applicant();
         applicant.setUsername("user1");
@@ -33,7 +31,7 @@ class ApplicantRepoTest {
         assertThat(exists).isTrue();
     }
     @Test
-    void itShouldCheckIfApplicantUsernameDoesNotExist() {
+    public void itShouldCheckIfApplicantUsernameDoesNotExist() {
         //given
         String username = "user1";
         //when
@@ -43,7 +41,7 @@ class ApplicantRepoTest {
     }
 
     @Test
-    void itShouldReturnApplicantIfUsernameExists() {
+    public void itShouldReturnApplicantIfUsernameExists() {
         //given
         Applicant applicant = new Applicant();
         applicant.setUsername("user1");
@@ -58,7 +56,7 @@ class ApplicantRepoTest {
     }
 
     @Test
-    void itShouldReturnEmptyOptionalOfApplicantIfUsernameDoesNotExist() {
+    public void itShouldReturnEmptyOptionalOfApplicantIfUsernameDoesNotExist() {
         //given
         String username = "user1";
         //when
