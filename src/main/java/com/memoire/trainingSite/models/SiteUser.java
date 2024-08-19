@@ -20,17 +20,17 @@ public class SiteUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long user_id;
-    @Column(name ="Username")
+    @Column(name ="Username", nullable = false)
     private String username;
-    @Column(name ="Password" )
+    @Column(name ="Password", nullable = false)
     private String user_password;
-    @Column(name = "JoinDate")
+    @Column(name = "JoinDate", nullable = false)
     private LocalDateTime user_join_date;
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private UserStatus user_status;
-    @Column(name ="PhoneNumber")
+    @Column(name ="PhoneNumber", nullable = false)
     private String user_phone_number;
-    @Column(name ="Email")
+    @Column(name ="Email", nullable = false)
     private String email;
 
 

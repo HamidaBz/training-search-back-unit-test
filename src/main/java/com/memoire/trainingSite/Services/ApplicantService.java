@@ -23,13 +23,9 @@ public class ApplicantService {
         this.applicantDTOMapper = applicantDTOMapper;
     }
 
-    public Optional<ApplicantResponseDTO> createApplicant(ApplicantDTO applicantDTO){
+    public ApplicantResponseDTO createApplicant(ApplicantDTO applicantDTO){
         Applicant applicant = applicantDTOMapper.toEntity(applicantDTO);
-        if(!applicantRepo.existsByUsername(applicant.getUsername())) {
-            return Optional.of(applicantDTOMapper.toResponseDTO(applicantRepo.save(applicant)));
-        }else{
-            return Optional.empty();
-        }
+        return applicantDTOMapper.toResponseDTO(applicantRepo.save(applicant));
 
     }
     public Optional<ApplicantResponseDTO> getApplicant(Long id) {

@@ -4,38 +4,33 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Primary;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name ="Applicant")
 public class Applicant extends SiteUser {
-    @Column(name="FirstName")
+    @Column(name="FirstName", nullable=false)
     private String applicant_firstname;
 
-    @Column(name="LastName")
+    @Column(name="LastName", nullable = false)
     private String applicant_lastname;
 
-    @Column(name="Birthday")
+    @Column(name="Birthday", nullable = false)
     private LocalDate applicant_birthday;
-
-
 
     @OneToMany(mappedBy = "id_application.applicant", fetch = FetchType.LAZY)
     private List<Application> applications = new ArrayList<>() ;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "applicant_profile_fk")
-    private ApplicantProfile applicantProfile;
+    private ApplicantProfile applicantProfile = new ApplicantProfile();
 
     public Applicant(Long user_id, String username, String password, LocalDateTime user_join_date,UserStatus user_status,
                      String user_phone_number, String email,
@@ -44,8 +39,6 @@ public class Applicant extends SiteUser {
         this.applicant_firstname = applicant_firstname;
         this.applicant_lastname = applicant_lastname;
         this.applicant_birthday = applicant_birthday;
-
-
     }
 
 

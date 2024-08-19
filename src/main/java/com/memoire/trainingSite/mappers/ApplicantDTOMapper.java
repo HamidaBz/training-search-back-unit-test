@@ -7,20 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicantDTOMapper {
-    public ApplicantDTO toDTO(Applicant applicant) {
-        return new ApplicantDTO(
-                applicant.getUser_id(),
-                applicant.getUsername(),
-                applicant.getUser_password(),
-                applicant.getUser_join_date(),
-                applicant.getUser_status(),
-                applicant.getUser_phone_number(),
-                applicant.getEmail(),
-                applicant.getApplicant_firstname(),
-                applicant.getApplicant_lastname(),
-                applicant.getApplicant_birthday()
-        );
-    }
     public Applicant toEntity(ApplicantDTO applicantDTO){
         return new Applicant(
                 applicantDTO.getUser_id(),

@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ApplicantController.class) // to load only the beans of web context related to ApplicantController
-public class ApplicantControllerTest {
+public class ApplicantControllerTest2 {
 
     @Autowired
     private MockMvc mockMvc;

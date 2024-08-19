@@ -15,14 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Company extends SiteUser {
-    @Column(name = "CompanyName")
+    @Column(name = "CompanyName", nullable = false)
     private  String CompanyName;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_profile_fk")
-    private CompanyProfile companyProfile ;
-
-
-    @JsonIgnore
+    private CompanyProfile companyProfile = new CompanyProfile();
     @OneToMany(mappedBy = "company")
     private List<TrainingPosition> trainingPositions = new ArrayList<>() ;
 

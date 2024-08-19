@@ -6,6 +6,7 @@ import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
 import com.memoire.trainingSite.mappers.ApplicantDTOMapper;
 import com.memoire.trainingSite.models.Applicant;
+import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,67 +32,59 @@ public class ApplicantServiceTest {
     @InjectMocks
     private ApplicantService applicantService;
 
-
     @Test
-    public void create_applicant_if_no_applicant_with_this_username_exists() {
+    public void testCreate_applicant() {
         //given
-        String username = "newUser";
+        String username = "Hami";
 
-        ApplicantDTO applicantDTO = new ApplicantDTO();
-        applicantDTO.setUsername(username);
+        ApplicantDTO applicantDTO = new ApplicantDTO(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8));
 
-        Applicant applicant = new Applicant();
-        applicant.setUsername(username);
+        Applicant applicant = new Applicant(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8));
 
-        ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO();
-        applicantResponseDTO.setUsername(username);
+        ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
+                null,"Hami",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), null);
 
 
         when(applicantDTOMapper.toEntity(applicantDTO)).thenReturn(applicant);
-        when(applicantRepo.existsByUsername(username)).thenReturn(false);
         when(applicantRepo.save(applicant)).thenReturn(applicant);
         when(applicantDTOMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
 
         //when
-        Optional<ApplicantResponseDTO>  result= applicantService.createApplicant(applicantDTO);
+        ApplicantResponseDTO  result= applicantService.createApplicant(applicantDTO);
         //then
-        verify(applicantRepo).existsByUsername(applicant.getUsername());
         verify(applicantRepo).save(applicant);
-        assertThat(result).isPresent();
-        assertThat(result.get().getUsername()).isEqualTo(username);
+        assertThat(result.getUser_id()).isEqualTo(applicantDTO.getUser_id());
     }
 
-    @Test
-    public void donot_create_applicant_if_an_applicant_with_this_username_exists() {
-        //given
-        ApplicantDTO applicantDTO = new ApplicantDTO();
-        String existingUsername = "existingUser";
-        applicantDTO.setUsername(existingUsername);
-
-
-        Applicant applicant = new Applicant();
-        applicant.setUsername(existingUsername);
-
-        when(applicantDTOMapper.toEntity(applicantDTO)).thenReturn(applicant);
-        when(applicantRepo.existsByUsername(existingUsername)).thenReturn(true);
-
-        //when
-        Optional<ApplicantResponseDTO>  result= applicantService.createApplicant(applicantDTO);
-        //then
-        verify(applicantRepo).existsByUsername(applicant.getUsername());
-        verify(applicantRepo, never()).save(applicant);
-        assertThat(result).isEmpty();
-    }
 
     @Test
-    void get_applicant_return_applicant_if_id_exists() {
+    void getApplicant_return_applicant_if_id_exists() {
         //given
         Long applicantId = 1L;
 
-        Applicant applicant = new Applicant();
+        Applicant applicant =  new Applicant(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8));
         applicant.setUser_id(applicantId);
 
-        ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO();
+        ApplicantResponseDTO applicantResponseDTO =  new ApplicantResponseDTO(
+                null,"Hami",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), null);
         applicantResponseDTO.setUser_id(applicantId);
 
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.of(applicant));
@@ -122,10 +117,18 @@ public class ApplicantServiceTest {
     void get_applicant_if_usename_exists() {
         //given
         String existingUsername = "existingUsername";
-        Applicant applicant = new Applicant();
+        Applicant applicant = new Applicant(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8));
         applicant.setUsername(existingUsername);
 
-        ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO();
+        ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
+                null,"Hami",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), null);
         applicantResponseDTO.setUsername(existingUsername);
 
         when(applicantDTOMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
@@ -168,13 +171,25 @@ public class ApplicantServiceTest {
         //given
         Long applicantId = 1L;
 
-        Applicant existedApplicant = new Applicant();
+        Applicant existedApplicant = new Applicant(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8));
         existedApplicant.setUser_id(applicantId);
 
-        ApplicantDTO updatedApplicantDTO = new ApplicantDTO();
+        ApplicantDTO updatedApplicantDTO = new ApplicantDTO(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1995,9,8));
         updatedApplicantDTO.setUser_id(applicantId);
 
-        Applicant updatedApplicant = new Applicant();
+        Applicant updatedApplicant = new Applicant(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1995,9,8));
         updatedApplicant.setUser_id(applicantId);
 
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.of(existedApplicant));
@@ -194,10 +209,18 @@ public class ApplicantServiceTest {
         //given
         Long applicantId = 1L;
 
-        ApplicantDTO updatedApplicantDTO = new ApplicantDTO();
+        ApplicantDTO updatedApplicantDTO = new ApplicantDTO(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139308",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8));
         updatedApplicantDTO.setUser_id(applicantId);
 
-        Applicant updatedApplicant = new Applicant();
+        Applicant updatedApplicant = new Applicant(
+                null,"Hami","password",
+                LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1995,9,8));
         updatedApplicant.setUser_id(applicantId);
 
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.empty());
