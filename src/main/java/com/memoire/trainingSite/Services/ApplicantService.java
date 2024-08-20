@@ -3,7 +3,7 @@ package com.memoire.trainingSite.Services;
 import com.memoire.trainingSite.DAO.ApplicantRepo;
 import com.memoire.trainingSite.DTO.ApplicantDTO;
 import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
-import com.memoire.trainingSite.mappers.ApplicantDTOMapper;
+import com.memoire.trainingSite.mappers.ApplicantMapper;
 import com.memoire.trainingSite.models.Applicant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,30 +16,30 @@ import java.util.stream.Collectors;
 public class ApplicantService {
 
     private ApplicantRepo applicantRepo  ;
-    private ApplicantDTOMapper applicantDTOMapper;
+    private ApplicantMapper applicantMapper;
     @Autowired
-    public ApplicantService(ApplicantRepo applicantRepo ,  ApplicantDTOMapper applicantDTOMapper){
+    public ApplicantService(ApplicantRepo applicantRepo ,  ApplicantMapper applicantMapper){
         this.applicantRepo = applicantRepo;
-        this.applicantDTOMapper = applicantDTOMapper;
+        this.applicantMapper = applicantMapper;
     }
 
     public ApplicantResponseDTO createApplicant(ApplicantDTO applicantDTO){
-        Applicant applicant = applicantDTOMapper.toEntity(applicantDTO);
-        return applicantDTOMapper.toResponseDTO(applicantRepo.save(applicant));
+        Applicant applicant = applicantMapper.toEntity(applicantDTO);
+        return applicantMapper.toResponseDTO(applicantRepo.save(applicant));
 
     }
     public Optional<ApplicantResponseDTO> getApplicant(Long id) {
-        return applicantRepo.findById(id).map(applicantDTOMapper::toResponseDTO);
+        return applicantRepo.findById(id).map(applicantMapper::toResponseDTO);
     }
 
     public Optional<ApplicantResponseDTO> getApplicantByUsername(String username){
-            return applicantRepo.findByUsername(username).map(applicantDTOMapper::toResponseDTO);
+            return applicantRepo.findByUsername(username).map(applicantMapper::toResponseDTO);
 
     }
     public List<ApplicantResponseDTO> getApplicants() {
         return applicantRepo.findAll()
                 .stream()
-                .map(applicantDTOMapper::toResponseDTO)
+                .map(applicantMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -47,10 +47,10 @@ public class ApplicantService {
         Optional<Applicant> applicant =  applicantRepo.findById(id);
 
         if(applicant.isPresent()){
-            Applicant  updatedApplicant = applicantDTOMapper.toEntity(updatedApplicantDTO);
+            Applicant  updatedApplicant = applicantMapper.toEntity(updatedApplicantDTO);
             applicantRepo.save(updatedApplicant);
         }
-        return applicant.map(applicantDTOMapper::toResponseDTO);
+        return applicant.map(applicantMapper::toResponseDTO);
     }
 
     public void deleteApplicant(Long id) {

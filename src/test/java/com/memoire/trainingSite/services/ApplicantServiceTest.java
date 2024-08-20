@@ -4,7 +4,7 @@ import com.memoire.trainingSite.DAO.ApplicantRepo;
 import com.memoire.trainingSite.DTO.ApplicantDTO;
 import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
-import com.memoire.trainingSite.mappers.ApplicantDTOMapper;
+import com.memoire.trainingSite.mappers.ApplicantMapper;
 import com.memoire.trainingSite.models.Applicant;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ public class ApplicantServiceTest {
     @Mock
     private ApplicantRepo applicantRepo;
     @Mock
-    private ApplicantDTOMapper applicantDTOMapper;
+    private ApplicantMapper applicantMapper;
     @InjectMocks
     private ApplicantService applicantService;
 
@@ -56,9 +56,9 @@ public class ApplicantServiceTest {
                 LocalDate.of(1990,9,8), null);
 
 
-        when(applicantDTOMapper.toEntity(applicantDTO)).thenReturn(applicant);
+        when(applicantMapper.toEntity(applicantDTO)).thenReturn(applicant);
         when(applicantRepo.save(applicant)).thenReturn(applicant);
-        when(applicantDTOMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
+        when(applicantMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
 
         //when
         ApplicantResponseDTO  result= applicantService.createApplicant(applicantDTO);
@@ -88,7 +88,7 @@ public class ApplicantServiceTest {
         applicantResponseDTO.setUser_id(applicantId);
 
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.of(applicant));
-        when(applicantDTOMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
+        when(applicantMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
         //when
         Optional<ApplicantResponseDTO> result =
                 applicantService.getApplicant(applicantId);
@@ -131,7 +131,7 @@ public class ApplicantServiceTest {
                 LocalDate.of(1990,9,8), null);
         applicantResponseDTO.setUsername(existingUsername);
 
-        when(applicantDTOMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
+        when(applicantMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
         when(applicantRepo.findByUsername(existingUsername)).thenReturn(Optional.of(applicant));
 
         //when
@@ -185,8 +185,8 @@ public class ApplicantServiceTest {
                 LocalDate.of(1995,7,1), null);
 
         when(applicantRepo.findAll()).thenReturn(List.of(applicant_1,applicant_2));
-        when(applicantDTOMapper.toResponseDTO(applicant_1)).thenReturn(applicantResponseDTO_1);
-        when(applicantDTOMapper.toResponseDTO(applicant_2)).thenReturn(applicantResponseDTO_2);
+        when(applicantMapper.toResponseDTO(applicant_1)).thenReturn(applicantResponseDTO_1);
+        when(applicantMapper.toResponseDTO(applicant_2)).thenReturn(applicantResponseDTO_2);
         //when
         List<ApplicantResponseDTO> result = applicantService.getApplicants();
 
@@ -222,7 +222,7 @@ public class ApplicantServiceTest {
         updatedApplicant.setUser_id(applicantId);
 
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.of(existedApplicant));
-        when(applicantDTOMapper.toEntity(updatedApplicantDTO)).thenReturn(updatedApplicant);
+        when(applicantMapper.toEntity(updatedApplicantDTO)).thenReturn(updatedApplicant);
         //when
         Optional<ApplicantResponseDTO> result = applicantService.updateApplicant(applicantId,updatedApplicantDTO);
         //then

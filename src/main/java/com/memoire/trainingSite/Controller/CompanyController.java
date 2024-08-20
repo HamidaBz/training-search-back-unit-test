@@ -1,6 +1,7 @@
 package com.memoire.trainingSite.Controller;
 
 import com.memoire.trainingSite.DTO.CompanyDTO;
+import com.memoire.trainingSite.DTO.CompanyResponseDTO;
 import com.memoire.trainingSite.Services.CompanyService;
 import com.memoire.trainingSite.models.Company;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class CompanyController {
 
 
     @GetMapping
-    public ResponseEntity<List<CompanyDTO>> getCompanies() {
-        List<CompanyDTO> companies = companyService.getCompanies();
+    public ResponseEntity<List<CompanyResponseDTO>> getCompanies() {
+        List<CompanyResponseDTO> companies = companyService.getCompanies();
         if(companies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else {
@@ -30,8 +31,8 @@ public class CompanyController {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<CompanyDTO> getCompanyById(@PathVariable Long id) {
-        CompanyDTO company = companyService.getCompanyById(id);
+    public ResponseEntity<CompanyResponseDTO> getCompanyById(@PathVariable Long id) {
+        CompanyResponseDTO company = companyService.getCompanyById(id);
         if(company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else {

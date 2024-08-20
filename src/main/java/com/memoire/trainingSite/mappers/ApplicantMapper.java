@@ -6,7 +6,7 @@ import com.memoire.trainingSite.models.Applicant;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ApplicantDTOMapper {
+public class ApplicantMapper {
     public Applicant toEntity(ApplicantDTO applicantDTO){
         return new Applicant(
                 applicantDTO.getUser_id(),

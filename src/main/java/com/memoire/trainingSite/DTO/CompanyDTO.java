@@ -3,12 +3,13 @@ package com.memoire.trainingSite.DTO;
 import com.memoire.trainingSite.models.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class CompanyDTO extends UserDTO{
 
     private  String companyName;

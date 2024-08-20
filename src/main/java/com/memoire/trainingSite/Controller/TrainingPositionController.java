@@ -78,7 +78,7 @@ public class TrainingPositionController {
         }
     }
 
-    @PostConstruct
+   /* @PostConstruct
     public void init() {
 
         Company comp = new Company("aymen comp "  , null , new ArrayList<>());
@@ -87,5 +87,5 @@ public class TrainingPositionController {
 
         trainingPositionService.createPosition(trainingPosition1);
 
-    }
+    }*/
 }

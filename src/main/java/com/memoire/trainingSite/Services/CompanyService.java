@@ -2,7 +2,8 @@ package com.memoire.trainingSite.Services;
 
 import com.memoire.trainingSite.DAO.CompanyRepo;
 import com.memoire.trainingSite.DTO.CompanyDTO;
-import com.memoire.trainingSite.mappers.CompanyDTOMapper;
+import com.memoire.trainingSite.DTO.CompanyResponseDTO;
+import com.memoire.trainingSite.mappers.CompanyMapper;
 import com.memoire.trainingSite.models.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,11 +13,11 @@ import java.util.stream.Collectors;
 
 public class CompanyService {
     private CompanyRepo companyRepo ;
-    private CompanyDTOMapper companyDTOMapper;
+    private CompanyMapper companyMapper;
     @Autowired
-    public CompanyService(CompanyRepo companyRepo , CompanyDTOMapper companyDTOMapper){
+    public CompanyService(CompanyRepo companyRepo , CompanyMapper companyMapper){
         this.companyRepo = companyRepo;
-        this.companyDTOMapper = companyDTOMapper;
+        this.companyMapper = companyMapper;
     }
     public Company createCompany(Company company){
         try {
@@ -29,13 +30,13 @@ public class CompanyService {
     }
 
 
-    public CompanyDTO getCompanyById(Long id) {
-        return companyRepo.findById(id).map(companyDTOMapper::toDTO).orElseThrow(() -> new IllegalArgumentException( id + " does not exist"));
+    public CompanyResponseDTO getCompanyById(Long id) {
+        return companyRepo.findById(id).map(companyMapper::toResponseDTO).orElseThrow(() -> new IllegalArgumentException( id + " does not exist"));
     }
-    public List<CompanyDTO> getCompanies() {
+    public List<CompanyResponseDTO> getCompanies() {
         return companyRepo.findAll()
                 .stream()
-                .map(company -> companyDTOMapper.toDTO(company))
+                .map(company -> companyMapper.toResponseDTO(company))
                 .collect(Collectors.toList());
     }
     //create a function that returns a company object and takes in a long id and a company object as parameters

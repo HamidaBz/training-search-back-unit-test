@@ -6,7 +6,7 @@ import com.memoire.trainingSite.models.Company;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CompanyDTOMapper {
+public class CompanyMapper {
     public Company toEntity(CompanyDTO companyDTO) {
         return new Company(
                 companyDTO.getUser_id(),
@@ -28,7 +28,9 @@ public class CompanyDTOMapper {
                 company.getUser_status(),
                 company.getUser_phone_number(),
                 company.getEmail(),
-                company.getCompanyName()
+                company.getCompanyName(),
+                company.getCompanyProfile(),
+                company.getTrainingPositions()
                 );
     }
 }

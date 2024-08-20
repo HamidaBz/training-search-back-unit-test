@@ -66,7 +66,7 @@ public class SiteUserController {
 
 
 
-
+/*
     //creating some dummy data
     @PostConstruct
     public void init(){
@@ -87,7 +87,7 @@ public class SiteUserController {
             siteUserService.createUser(user) ;
 
     }
-
+*/
 
 
 }
