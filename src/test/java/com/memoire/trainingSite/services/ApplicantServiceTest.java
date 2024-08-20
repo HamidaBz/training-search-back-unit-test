@@ -158,12 +158,41 @@ public class ApplicantServiceTest {
     }
 
     @Test
-    void getApplicants_must_call_findAll() {
+    void testGetApplicants() {
         //given
+        Applicant applicant_1 = new Applicant(
+                null,"Hami",null,
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8));
+
+        Applicant applicant_2 = new Applicant(
+                null,"Houhou", null,
+                LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
+                "houhou.bouaziz@gmail.com","Houhou","Bouaziz",
+                LocalDate.of(1995,7,1));
+
+        ApplicantResponseDTO applicantResponseDTO_1 = new ApplicantResponseDTO(
+                null,"Hami",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), null);
+
+        ApplicantResponseDTO applicantResponseDTO_2 = new ApplicantResponseDTO(
+                null,"Houhou",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
+                "houhou.bouaziz@gmail.com","Houhou","Bouaziz",
+                LocalDate.of(1995,7,1), null);
+
+        when(applicantRepo.findAll()).thenReturn(List.of(applicant_1,applicant_2));
+        when(applicantDTOMapper.toResponseDTO(applicant_1)).thenReturn(applicantResponseDTO_1);
+        when(applicantDTOMapper.toResponseDTO(applicant_2)).thenReturn(applicantResponseDTO_2);
         //when
         List<ApplicantResponseDTO> result = applicantService.getApplicants();
+
         //then
         verify(applicantRepo).findAll();
+        assertThat(result).isEqualTo(List.of(applicantResponseDTO_1, applicantResponseDTO_2));
     }
 
     @Test

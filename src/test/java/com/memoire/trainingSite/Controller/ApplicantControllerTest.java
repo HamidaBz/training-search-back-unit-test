@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.memoire.trainingSite.DTO.ApplicantDTO;
 import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
+import com.memoire.trainingSite.models.Applicant;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(ApplicantController.class)
@@ -39,11 +40,26 @@ class ApplicantControllerTest {
      void test_getApplicants() throws Exception {
 
         //given
+        ApplicantResponseDTO applicantResponseDTO_1 = new ApplicantResponseDTO(
+                null,"Hami",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), null);
+
+        ApplicantResponseDTO applicantResponseDTO_2 = new ApplicantResponseDTO(
+                null,"Houhou",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
+                "houhou.bouaziz@gmail.com","Houhou","Bouaziz",
+                LocalDate.of(1995,7,1), null);
+
+        when(applicantService.getApplicants()).thenReturn(List.of(applicantResponseDTO_1,applicantResponseDTO_2));
+
         //when
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/applicants"));
         //then
         verify(applicantService).getApplicants();
-        result.andExpect(status().isOk());
+        result.andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(List.of(applicantResponseDTO_1,applicantResponseDTO_2))));
     }
 
     @Test
