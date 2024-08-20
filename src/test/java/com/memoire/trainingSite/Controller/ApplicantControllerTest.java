@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.memoire.trainingSite.DTO.ApplicantDTO;
 import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
-import com.memoire.trainingSite.models.Applicant;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

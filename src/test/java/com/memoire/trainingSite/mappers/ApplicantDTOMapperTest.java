@@ -16,12 +16,6 @@ class ApplicantDTOMapperTest {
     ApplicantDTOMapper applicantDTOMapper;
 
     @Test
-    @Disabled
-    void toDTO() {
-
-    }
-
-    @Test
     void toEntity() {
         //given
         ApplicantDTO applicantDTO = new ApplicantDTO();

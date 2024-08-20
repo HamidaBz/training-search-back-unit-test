@@ -1,8 +1,6 @@
 package com.memoire.trainingSite.DTO;
 
-import com.memoire.trainingSite.models.Alert;
-import com.memoire.trainingSite.models.CompanyProfile;
-import com.memoire.trainingSite.models.Notification;
+import com.memoire.trainingSite.models.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,15 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 @Data
 @AllArgsConstructor
-public class CompanyDTO {
+public class CompanyDTO extends UserDTO{
 
-    private Long user_id;
-    private String username;
-    private String user_password;
-    private  String CompanyName;
-    private LocalDateTime user_join_date;
-    private String user_phone_number;
-    private List<Notification> notifications = new ArrayList<>();
-    private List<Alert> alerts = new ArrayList<>() ;
-    private CompanyProfile companyProfile ;
+    private  String companyName;
+
+    public CompanyDTO(Long user_id, String username, String password, LocalDateTime user_join_date, UserStatus user_status,
+                      String user_phone_number, String email, String companyName){
+        super(user_id, username, password, user_join_date, user_status, user_phone_number, email);
+        this.companyName = companyName;
+    }
 }
