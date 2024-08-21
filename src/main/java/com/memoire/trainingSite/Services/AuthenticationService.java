@@ -5,6 +5,8 @@ import com.memoire.trainingSite.DTO.RegisterDTO;
 import com.memoire.trainingSite.models.SiteUser;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthenticationService {
 
@@ -20,14 +22,12 @@ public class AuthenticationService {
 
         String um = authrequest.getUsername() ;
 
-        SiteUser user = userRepo.findByUsername(um);
-        if (user == null) {
+        Optional<SiteUser> user = userRepo.findByUsername(um);
+        if (user.isEmpty()) {
             System.out.println("user is null");
         }
 
-
-
-        if (user.getUsername().equals("aymene22k@gmail.com")) {
+        if (user.get().getUsername().equals("aymene22k@gmail.com")) {
             return true; // Authentication successful
         } else {
             return false; // Authentication failed

@@ -91,7 +91,7 @@ public class ApplicantServiceTest {
         when(applicantMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
         //when
         Optional<ApplicantResponseDTO> result =
-                applicantService.getApplicant(applicantId);
+                applicantService.getApplicantById(applicantId);
         //then
         verify(applicantRepo).findById(applicantId);
         assertThat(result).isPresent();
@@ -107,7 +107,7 @@ public class ApplicantServiceTest {
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.empty());
         //when
         Optional<ApplicantResponseDTO> result =
-                applicantService.getApplicant(applicantId);
+                applicantService.getApplicantById(applicantId);
         //then
         verify(applicantRepo).findById(applicantId);
         assertThat(result).isEmpty();
@@ -221,8 +221,17 @@ public class ApplicantServiceTest {
                 LocalDate.of(1995,9,8));
         updatedApplicant.setUser_id(applicantId);
 
+        ApplicantResponseDTO updatedApplicantResponseDTO = new ApplicantResponseDTO(
+                null,"Hami",
+                LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
+                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
+                LocalDate.of(1995,9,8), null);
+        updatedApplicantResponseDTO.setUser_id(applicantId);
+
+
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.of(existedApplicant));
         when(applicantMapper.toEntity(updatedApplicantDTO)).thenReturn(updatedApplicant);
+        when(applicantMapper.toResponseDTO(updatedApplicant)).thenReturn(updatedApplicantResponseDTO);
         //when
         Optional<ApplicantResponseDTO> result = applicantService.updateApplicant(applicantId,updatedApplicantDTO);
         //then

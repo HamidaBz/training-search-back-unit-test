@@ -34,7 +34,7 @@ public class ApplicantController {
 
     @GetMapping("/{applicantId}")
     public ResponseEntity<ApplicantResponseDTO> getApplicantById(@PathVariable Long applicantId) {
-        Optional<ApplicantResponseDTO> applicant = applicantService.getApplicant(applicantId);
+        Optional<ApplicantResponseDTO> applicant = applicantService.getApplicantById(applicantId);
         if (applicant.isPresent()) {
             return new ResponseEntity<>(applicant.get(), HttpStatus.OK);
         } else {
@@ -62,9 +62,9 @@ public class ApplicantController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteApplicant(@PathVariable Long id) {
-            applicantService.deleteApplicant(id);
+    @DeleteMapping("/{applicantId}")
+    public ResponseEntity<Void> deleteApplicant(@PathVariable Long applicantId) {
+            applicantService.deleteApplicant(applicantId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

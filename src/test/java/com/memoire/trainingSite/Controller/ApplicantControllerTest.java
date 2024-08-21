@@ -104,10 +104,10 @@ class ApplicantControllerTest {
                 "hami.bouaziz@gmail.com","Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), null);
         //when
-        when(applicantService.getApplicant(applicantId)).thenReturn(Optional.of(applicantResponseDTO));
+        when(applicantService.getApplicantById(applicantId)).thenReturn(Optional.of(applicantResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/applicants/1"));
         //then
-        verify(applicantService).getApplicant(applicantId);
+        verify(applicantService).getApplicantById(applicantId);
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.user_id").value(1L));
     }
@@ -118,10 +118,10 @@ class ApplicantControllerTest {
         Long applicantId = 1L;
 
         //when
-        when(applicantService.getApplicant(applicantId)).thenReturn(Optional.empty());
+        when(applicantService.getApplicantById(applicantId)).thenReturn(Optional.empty());
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/applicants/1"));
         //then
-        verify(applicantService).getApplicant(applicantId);
+        verify(applicantService).getApplicantById(applicantId);
         result.andExpect(status().isNotFound());
     }
 

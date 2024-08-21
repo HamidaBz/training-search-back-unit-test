@@ -18,7 +18,7 @@ public class ApplicantService {
     private ApplicantRepo applicantRepo  ;
     private ApplicantMapper applicantMapper;
     @Autowired
-    public ApplicantService(ApplicantRepo applicantRepo ,  ApplicantMapper applicantMapper){
+    public ApplicantService(ApplicantRepo applicantRepo, ApplicantMapper applicantMapper){
         this.applicantRepo = applicantRepo;
         this.applicantMapper = applicantMapper;
     }
@@ -28,7 +28,7 @@ public class ApplicantService {
         return applicantMapper.toResponseDTO(applicantRepo.save(applicant));
 
     }
-    public Optional<ApplicantResponseDTO> getApplicant(Long id) {
+    public Optional<ApplicantResponseDTO> getApplicantById(Long id) {
         return applicantRepo.findById(id).map(applicantMapper::toResponseDTO);
     }
 
@@ -49,14 +49,13 @@ public class ApplicantService {
         if(applicant.isPresent()){
             Applicant  updatedApplicant = applicantMapper.toEntity(updatedApplicantDTO);
             applicantRepo.save(updatedApplicant);
+            return Optional.of(applicantMapper.toResponseDTO(updatedApplicant));
         }
-        return applicant.map(applicantMapper::toResponseDTO);
+        return Optional.empty();
     }
 
     public void deleteApplicant(Long id) {
         applicantRepo.deleteById(id);
     }
-
-
 
 }
