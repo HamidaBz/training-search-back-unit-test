@@ -41,7 +41,7 @@ class CompanyRepoTest {
     }
 
     @Test
-    void test_existsByUsername_it_returns_false_when_company_doesnot_exist() {
+    void test_existsByUsername_it_returns_false_when_company_does_not_exist() {
         String username = "H&H";
         //when
         Boolean exists = companyRepo.existsByUsername(username);
@@ -54,7 +54,7 @@ class CompanyRepoTest {
     void test_findByUsername_it_returns_company_when_it_exists() {
         //given
         String username = "H&H";
-        Company company = new Company(1L,username,"password",
+        Company company = new Company(null,username,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
                 UserStatus.ACTIVE, "0555657585","h.h@gmail.com",
                 "H&H Company");
@@ -69,7 +69,7 @@ class CompanyRepoTest {
 
 
     @Test
-    void test_findByUsername_it_returns_empty_when_it_doesnot_exist() {
+    void test_findByUsername_it_returns_empty_when_it_does_not_exist() {
         //given
         String username = "H&H";
         //when

@@ -40,7 +40,6 @@ public class CompanyService {
                 .map(companyMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
-    //create a function that returns a company object and takes in a long id and a company object as parameters
     public Optional<CompanyResponseDTO> updateCompany(Long id, CompanyDTO companyDTO) {
         Optional<Company> company = companyRepo.findById(id);
 

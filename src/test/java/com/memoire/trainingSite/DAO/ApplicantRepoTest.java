@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,7 +23,7 @@ class ApplicantRepoTest {
     }
 
     @Test
-    public void itShouldCheckIfApplicantUsernameExists() {
+    public void test_existsByUsername_it_returns_true_when_applicant_exists() {
         //given
         Applicant applicant = new Applicant(
                 null,"Hami","password",
@@ -39,7 +38,7 @@ class ApplicantRepoTest {
         assertThat(exists).isTrue();
     }
     @Test
-    public void itShouldCheckIfApplicantUsernameDoesNotExist() {
+    public void test_existsByUsername_it_returns_false_when_applicant_does_not_exist() {
         //given
         String username = "user1";
         //when
@@ -49,7 +48,7 @@ class ApplicantRepoTest {
     }
 
     @Test
-    public void itShouldReturnApplicantIfUsernameExists() {
+    public void test_findByUsername_it_returns_applicant_when_it_exists() {
         //given
         Applicant applicant = new Applicant(
                 null,"Hami","password",
@@ -67,7 +66,7 @@ class ApplicantRepoTest {
     }
 
     @Test
-    public void itShouldReturnEmptyOptionalOfApplicantIfUsernameDoesNotExist() {
+    public void test_findByUsername_it_returns_empty_when_it_does_not_exist() {
         //given
         String username = "user1";
         //when

@@ -38,19 +38,19 @@ public class ApplicantServiceTest {
         String username = "Hami";
 
         ApplicantDTO applicantDTO = new ApplicantDTO(
-                null,"Hami","password",
+                null,username,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
                 "hami.bouaziz@gmail.com","Hamida","Bouaziz",
                 LocalDate.of(1990,9,8));
 
         Applicant applicant = new Applicant(
-                null,"Hami","password",
+                null,username,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
                 "hami.bouaziz@gmail.com","Hamida","Bouaziz",
                 LocalDate.of(1990,9,8));
 
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
-                null,"Hami",
+                null,username,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
                 "hami.bouaziz@gmail.com","Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), null);
@@ -114,7 +114,7 @@ public class ApplicantServiceTest {
     }
 
     @Test
-    void get_applicant_if_usename_exists() {
+    void get_applicant_if_username_exists() {
         //given
         String existingUsername = "existingUsername";
         Applicant applicant = new Applicant(
@@ -239,11 +239,11 @@ public class ApplicantServiceTest {
         ArgumentCaptor<Applicant> captorApplicant = ArgumentCaptor.forClass(Applicant.class);
         verify(applicantRepo).save(captorApplicant.capture());
         assertThat(captorApplicant.getValue()).isEqualTo(updatedApplicant);
-        assertThat(result.isPresent());
+        assertThat(result).isPresent();
     }
 
     @Test
-    void updateApplicant_return_emptyOptional_if_applicant_doesnot_exists(){
+    void updateApplicant_return_emptyOptional_if_applicant_does_not_exists(){
         //given
         Long applicantId = 1L;
 
@@ -254,12 +254,6 @@ public class ApplicantServiceTest {
                 LocalDate.of(1990,9,8));
         updatedApplicantDTO.setUser_id(applicantId);
 
-        Applicant updatedApplicant = new Applicant(
-                null,"Hami","password",
-                LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1995,9,8));
-        updatedApplicant.setUser_id(applicantId);
 
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.empty());
         //when
