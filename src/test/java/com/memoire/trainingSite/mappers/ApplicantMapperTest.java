@@ -24,7 +24,7 @@ class ApplicantMapperTest {
         //given
         ApplicantDTO applicantDTO = new ApplicantDTO(
                 null,"Hami","password",
-                LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
+                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
                 "hami.bouaziz@gmail.com","Hamida","Bouaziz",
                 LocalDate.of(1990,9,8));
 

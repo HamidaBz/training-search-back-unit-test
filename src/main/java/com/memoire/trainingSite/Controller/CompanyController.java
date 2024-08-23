@@ -1,6 +1,5 @@
 package com.memoire.trainingSite.Controller;
 
-import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
 import com.memoire.trainingSite.DTO.CompanyDTO;
 import com.memoire.trainingSite.DTO.CompanyResponseDTO;
 import com.memoire.trainingSite.Services.CompanyService;
@@ -50,11 +49,8 @@ public class CompanyController {
     @GetMapping("/search")
     public ResponseEntity<CompanyResponseDTO> getCompanyByUserName(@RequestParam String username){
         Optional<CompanyResponseDTO>  company = companyService.getCompanyByUsername(username);
-        if(company.isPresent()){
-            return new ResponseEntity<>(company.get(),HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return company.map(companyResponseDTO -> new ResponseEntity<>(companyResponseDTO, HttpStatus.OK))
+                        .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
     @PutMapping("/{companyId}")
     public ResponseEntity<CompanyResponseDTO> updateCompany(@PathVariable Long companyId, @RequestBody CompanyDTO companyDTO) {

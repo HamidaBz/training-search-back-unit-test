@@ -35,31 +35,24 @@ public class ApplicantController {
     @GetMapping("/{applicantId}")
     public ResponseEntity<ApplicantResponseDTO> getApplicantById(@PathVariable Long applicantId) {
         Optional<ApplicantResponseDTO> applicant = applicantService.getApplicantById(applicantId);
-        if (applicant.isPresent()) {
-            return new ResponseEntity<>(applicant.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return applicant.map(applicantResponseDTO -> new ResponseEntity<>(applicantResponseDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{applicantId}")
     public ResponseEntity<ApplicantResponseDTO> updateApplicant(@PathVariable Long applicantId, @RequestBody ApplicantDTO applicant) {
         Optional<ApplicantResponseDTO> updatedApplicant = applicantService.updateApplicant(applicantId, applicant);
-        if (!updatedApplicant.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(updatedApplicant.get(), HttpStatus.OK);
-        }
+        return updatedApplicant
+                .map(applicantResponseDTO -> new ResponseEntity<>(applicantResponseDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/search")
     public ResponseEntity<ApplicantResponseDTO> getApplicantByUserName(@RequestParam String username){
         Optional<ApplicantResponseDTO>  applicant = applicantService.getApplicantByUsername(username);
-        if(applicant.isPresent()){
-            return new ResponseEntity<>(applicant.get(),HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return applicant
+                .map(applicantResponseDTO -> new ResponseEntity<>(applicantResponseDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{applicantId}")

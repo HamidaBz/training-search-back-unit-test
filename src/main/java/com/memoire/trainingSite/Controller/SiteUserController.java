@@ -1,18 +1,13 @@
 package com.memoire.trainingSite.Controller;
 
-import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
+import com.memoire.trainingSite.DTO.UserDTO;
 import com.memoire.trainingSite.DTO.UserResponseDTO;
 import com.memoire.trainingSite.Services.SiteUserService;
-import com.memoire.trainingSite.models.SiteUser;
-import com.memoire.trainingSite.models.UserStatus;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +16,6 @@ import java.util.Optional;
 public class SiteUserController {
 
     private SiteUserService siteUserService;
-
     //dependency injection
     @Autowired
     public SiteUserController(SiteUserService siteUserService){
@@ -29,28 +23,39 @@ public class SiteUserController {
     }
 
     @GetMapping
-    public List<SiteUser> getAllUsers(){
-        return siteUserService.getAllUsers();
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers(){
+        List<UserResponseDTO> users = siteUserService.getAllUsers();
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
-    @GetMapping("/{id}")
-    public Optional<SiteUser> getUserById(@PathVariable Long id){
-        return  siteUserService.getUserById(id);
+    @PostMapping
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserDTO userDTO) {
+        UserResponseDTO userResponseDTO = siteUserService.createUser(userDTO);
+        return new ResponseEntity<>(userResponseDTO, HttpStatus.CREATED) ;
+    }
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long userId){
+        return  siteUserService.getUserById(userId)
+                .map(userResponseDTO -> new ResponseEntity<>(userResponseDTO, HttpStatus.OK))
+                .orElseGet(()->new ResponseEntity<>(null,HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/search")
+    public ResponseEntity<UserResponseDTO> getUserByUserName(@RequestParam String username){
+        Optional<UserResponseDTO>  user = siteUserService.getUserByUsername(username);
+        return user
+                .map(userResponseDTO -> new ResponseEntity<>(userResponseDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+    }
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+        Optional<UserResponseDTO> updatedUser = siteUserService.updateUser(userId, userDTO);
+        return updatedUser.map(userResponseDTO -> new ResponseEntity<>(userResponseDTO,HttpStatus.OK))
+                .orElseGet(()-> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
-    
-    @PostMapping("/new")
-    public SiteUser createUser(@RequestBody SiteUser siteUser) {
-        return siteUserService.createUser(siteUser) ;
-    }
-    @PutMapping("/{id}")
-    public SiteUser updateUser(@PathVariable Long id, @RequestBody SiteUser siteUser) {
-        System.out.println("put request ");
-        return siteUserService.updateUser(id, siteUser);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        siteUserService.deleteUser(id);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        siteUserService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
