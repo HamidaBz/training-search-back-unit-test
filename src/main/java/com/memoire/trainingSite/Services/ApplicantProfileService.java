@@ -1,36 +1,33 @@
 package com.memoire.trainingSite.Services;
 
 import com.memoire.trainingSite.DAO.ApplicantProfileRepo;
-import com.memoire.trainingSite.DAO.ApplicantRepo;
-import com.memoire.trainingSite.DAO.ProfileRepo;
 import com.memoire.trainingSite.models.ApplicantProfile;
-import com.memoire.trainingSite.models.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ApplicantProfileService {
     private ApplicantProfileRepo applicantProfileRepo ;
     @Autowired
-    public ApplicantProfileService(ApplicantProfileRepo applicantProfileRepo) { this.applicantProfileRepo = applicantProfileRepo; }
-    public ApplicantProfile updateLevel(Long id, ApplicantProfile applicantProfile) {
-        if (applicantProfileRepo.existsById(id)) {
-            return applicantProfileRepo.save(applicantProfile);
-        } else {
-            throw new IllegalArgumentException( id + " does not exist");
-        }
+    public ApplicantProfileService(ApplicantProfileRepo applicantProfileRepo) {
+        this.applicantProfileRepo = applicantProfileRepo;
+    }
+    public Optional<ApplicantProfile> getApplicantProfileByProfileId(Long id) {
+        Optional<ApplicantProfile> applicantProfile = applicantProfileRepo.findById(id);
+        return applicantProfile;
+    }
+    public Optional<ApplicantProfile> getApplicantProfileByApplicantUsername(String username) {
+        Optional<ApplicantProfile> applicantProfile = applicantProfileRepo.findByApplicantUsername(username);
+        return applicantProfile;
     }
 
-    public ApplicantProfile getApplicantProfile(Long id) {
-        return (ApplicantProfile) applicantProfileRepo.findById(id).orElseThrow(() -> new IllegalArgumentException( id + " does not exist"));
-    }
-
-    public Profile updateProfile(Long id, ApplicantProfile applicantProfile) {
-        if(applicantProfileRepo.existsById(id)){
-            return applicantProfileRepo.save(applicantProfile);
-}else{
-            throw new IllegalArgumentException( id + " does not exist");
+    public Optional<ApplicantProfile> updateProfile(Long id, ApplicantProfile applicantProfile) {
+        Optional<ApplicantProfile> existingApplicantProfile =  applicantProfileRepo.findById(id);
+        if(existingApplicantProfile.isPresent()){
+            return Optional.of(applicantProfileRepo.save(applicantProfile));
         }
-
+        return Optional.empty();
     }
 }

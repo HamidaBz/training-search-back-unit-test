@@ -18,7 +18,6 @@ public class ApplicantProfile extends  Profile{
     @OneToMany(mappedBy = "applicantProfile")
     private List<Project> projects ;
     private String Current_level;
-
     @OneToOne(mappedBy = "applicantProfile")
     private Applicant applicant ;
 

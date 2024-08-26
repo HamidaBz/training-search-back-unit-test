@@ -17,9 +17,6 @@ public class Project {
     @Column(name = "projectLabel")
     private String projectLabel;
 
-    // As project_technologies is an array, it would need a different strategy
-    // You might want to have a separate table for project technologies with a foreign key relationship
-
     @Column(name = "projectStatus")
     private ProjectStatus projectStatus;
 
@@ -34,7 +31,4 @@ public class Project {
 
     @ManyToOne
     private ApplicantProfile applicantProfile ;
-
-
-
 }

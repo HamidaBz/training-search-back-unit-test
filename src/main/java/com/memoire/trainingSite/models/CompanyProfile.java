@@ -11,5 +11,5 @@ public class CompanyProfile extends Profile{
     @Column(name = "StaffCount")
     private String Company_nbr_employees;
     @OneToOne(mappedBy = "companyProfile")
-    private Company company  ;
+    private Company company;
 }
