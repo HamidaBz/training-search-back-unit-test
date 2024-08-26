@@ -268,6 +268,7 @@ public class ApplicantServiceTest {
         //given
         Long applicantId = 1L;
         //when
+        doNothing().when(applicantRepo).deleteById(applicantId);
         applicantService.deleteApplicant(applicantId);
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);

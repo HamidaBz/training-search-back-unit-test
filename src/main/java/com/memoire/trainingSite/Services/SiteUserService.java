@@ -56,11 +56,6 @@ public class SiteUserService {
     }
 
     public void deleteUser(Long id) {
-
-        if (siteUserRepo.existsById(id)) {
             siteUserRepo.deleteById(id);
-        } else {
-            throw new IllegalArgumentException("User with ID " + id + " does not exist");
-        }
     }
 }

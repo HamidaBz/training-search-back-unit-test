@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/v1/users")
 public class SiteUserController {
 
     private SiteUserService siteUserService;
-    //dependency injection
+
     @Autowired
     public SiteUserController(SiteUserService siteUserService){
         this.siteUserService = siteUserService ;

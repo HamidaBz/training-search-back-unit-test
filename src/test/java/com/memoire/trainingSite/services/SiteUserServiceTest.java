@@ -20,8 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SiteUserServiceTest {
@@ -219,7 +218,7 @@ class SiteUserServiceTest {
         Optional<UserResponseDTO> result = siteUserService.updateUser(userId,updatedUserDTO);
         //then
         verify(siteUserRepo).findById(userId);
-        ArgumentCaptor<Applicant> captorApplicant = ArgumentCaptor.forClass(Applicant.class);
+        ArgumentCaptor<SiteUser> captorApplicant = ArgumentCaptor.forClass(SiteUser.class);
         verify(siteUserRepo).save(captorApplicant.capture());
         assertThat(captorApplicant.getValue()).isEqualTo(updatedUser);
         assertThat(result).isPresent();
@@ -250,6 +249,7 @@ class SiteUserServiceTest {
         //given
         Long userId = 1L;
         //when
+        doNothing().when(siteUserRepo).deleteById(userId);
         siteUserService.deleteUser(userId);
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
