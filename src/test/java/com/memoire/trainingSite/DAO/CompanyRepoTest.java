@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -29,7 +30,7 @@ class CompanyRepoTest {
         String username = "H&H";
         Company company = new Company(null,username,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com", List.of(),
                 "H&H Company");
         companyRepo.save(company);
 
@@ -56,7 +57,7 @@ class CompanyRepoTest {
         String username = "H&H";
         Company company = new Company(null,username,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
                 "H&H Company");
         companyRepo.save(company);
 

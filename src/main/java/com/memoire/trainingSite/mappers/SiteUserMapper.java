@@ -15,7 +15,8 @@ public class SiteUserMapper {
                 siteUserDTO.getUser_join_date(),
                 siteUserDTO.getUser_status(),
                 siteUserDTO.getUser_phone_number(),
-                siteUserDTO.getEmail());
+                siteUserDTO.getEmail(),
+                siteUserDTO.getRoles());
     }
     public UserResponseDTO toResponseDTO(SiteUser siteuser){
         return new UserResponseDTO(
@@ -24,7 +25,8 @@ public class SiteUserMapper {
                 siteuser.getUser_join_date(),
                 siteuser.getUser_status(),
                 siteuser.getUser_phone_number(),
-                siteuser.getEmail()
+                siteuser.getEmail(),
+                siteuser.getRoles()
         );
     }
 }

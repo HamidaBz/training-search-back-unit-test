@@ -18,17 +18,18 @@ public class ApplicantResponseDTO extends UserResponseDTO{
     private String applicant_firstname;
     private String applicant_lastname;
     private LocalDate applicant_birthday;
+    List<Application> applications;
     private ApplicantProfile applicantProfile;
 
     public ApplicantResponseDTO(Long user_id, String username, LocalDateTime user_join_date,UserStatus user_status,
-                        String user_phone_number, String email,String applicant_firstname, String applicant_lastname,LocalDate applicant_birthday,
-                        ApplicantProfile applicantProfile){
-        super(user_id, username, user_join_date, user_status, user_phone_number, email);
+                        String user_phone_number, String email, List<Role> roles, String applicant_firstname, String applicant_lastname,LocalDate applicant_birthday,
+                                List<Application> applications, ApplicantProfile applicantProfile){
+        super(user_id, username, user_join_date, user_status, user_phone_number, email, roles);
         this.applicant_firstname = applicant_firstname;
         this.applicant_lastname = applicant_lastname;
         this.applicant_birthday = applicant_birthday;
+        this.applications = applications;
         this.applicantProfile = applicantProfile;
-
     }
 }
 

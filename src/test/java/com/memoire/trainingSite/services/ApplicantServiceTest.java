@@ -40,20 +40,20 @@ public class ApplicantServiceTest {
         ApplicantDTO applicantDTO = new ApplicantDTO(
                 null,username,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
 
         Applicant applicant = new Applicant(
                 null,username,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
 
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
                 null,username,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
 
 
         when(applicantMapper.toEntity(applicantDTO)).thenReturn(applicant);
@@ -76,15 +76,15 @@ public class ApplicantServiceTest {
         Applicant applicant =  new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         applicant.setUser_id(applicantId);
 
         ApplicantResponseDTO applicantResponseDTO =  new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com", List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         applicantResponseDTO.setUser_id(applicantId);
 
         when(applicantRepo.findById(applicantId)).thenReturn(Optional.of(applicant));
@@ -120,15 +120,15 @@ public class ApplicantServiceTest {
         Applicant applicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         applicant.setUsername(existingUsername);
 
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         applicantResponseDTO.setUsername(existingUsername);
 
         when(applicantMapper.toResponseDTO(applicant)).thenReturn(applicantResponseDTO);
@@ -163,26 +163,26 @@ public class ApplicantServiceTest {
         Applicant applicant_1 = new Applicant(
                 null,"Hami",null,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
 
         Applicant applicant_2 = new Applicant(
                 null,"Houhou", null,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com","Houhou","Bouaziz",
-                LocalDate.of(1995,7,1));
+                "houhou.bouaziz@gmail.com",List.of(),"Houhou","Bouaziz",
+                LocalDate.of(1995,7,1), List.of(),null);
 
         ApplicantResponseDTO applicantResponseDTO_1 = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
 
         ApplicantResponseDTO applicantResponseDTO_2 = new ApplicantResponseDTO(
                 null,"Houhou",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com","Houhou","Bouaziz",
-                LocalDate.of(1995,7,1), null);
+                "houhou.bouaziz@gmail.com",List.of(),"Houhou","Bouaziz",
+                LocalDate.of(1995,7,1), List.of(),null);
 
         when(applicantRepo.findAll()).thenReturn(List.of(applicant_1,applicant_2));
         when(applicantMapper.toResponseDTO(applicant_1)).thenReturn(applicantResponseDTO_1);
@@ -203,29 +203,29 @@ public class ApplicantServiceTest {
         Applicant existedApplicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         existedApplicant.setUser_id(applicantId);
 
         ApplicantDTO updatedApplicantDTO = new ApplicantDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1995,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1995,9,8), List.of(),null);
         updatedApplicantDTO.setUser_id(applicantId);
 
         Applicant updatedApplicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1995,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1995,9,8), List.of(),null);
         updatedApplicant.setUser_id(applicantId);
 
         ApplicantResponseDTO updatedApplicantResponseDTO = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1995,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1995,9,8), List.of(),null);
         updatedApplicantResponseDTO.setUser_id(applicantId);
 
 
@@ -250,8 +250,8 @@ public class ApplicantServiceTest {
         ApplicantDTO updatedApplicantDTO = new ApplicantDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139308",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         updatedApplicantDTO.setUser_id(applicantId);
 
 

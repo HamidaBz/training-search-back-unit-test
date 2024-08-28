@@ -38,12 +38,12 @@ class SiteUserControllerTest {
         UserResponseDTO userResponseDTO_1 = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
 
         UserResponseDTO userResponseDTO_2 = new UserResponseDTO(
                 null,"Houhou",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com");
+                "houhou.bouaziz@gmail.com",List.of());
 
         when(userService.getAllUsers()).thenReturn(List.of(userResponseDTO_1,userResponseDTO_2));
 
@@ -61,13 +61,13 @@ class SiteUserControllerTest {
         UserDTO userDTO =new UserDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         String applicantJSON = objectMapper.writeValueAsString(userDTO);
 
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
 
         //when
         when(userService.createUser(userDTO)).thenReturn(userResponseDTO);
@@ -91,7 +91,7 @@ class SiteUserControllerTest {
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 userId,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         //when
         when(userService.getUserById(userId)).thenReturn(Optional.of(userResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/users/1"));
@@ -122,14 +122,14 @@ class SiteUserControllerTest {
         UserDTO userDTO = new UserDTO(
                 user_id,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         String userDTOJson = objectMapper.writeValueAsString(userDTO);
 
 
         UserResponseDTO userResponseDTO =  new UserResponseDTO(
                 user_id,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         //when
         when(userService.updateUser(user_id, userDTO)).thenReturn(Optional.of(userResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.put("/v1/users/1")
@@ -149,7 +149,7 @@ class SiteUserControllerTest {
         UserDTO userDTO = new UserDTO(
                 user_id,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         String userDTOJson = objectMapper.writeValueAsString(userDTO);
 
         //when
@@ -170,7 +170,7 @@ class SiteUserControllerTest {
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         //when
         when(userService.getUserByUsername(username)).thenReturn(Optional.of(userResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/users/search?username="+username));

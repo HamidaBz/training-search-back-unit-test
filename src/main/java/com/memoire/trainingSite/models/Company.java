@@ -22,8 +22,8 @@ public class Company extends SiteUser {
     private List<TrainingPosition> trainingPositions = new ArrayList<>() ;
 
     public Company(Long user_id, String username, String password, LocalDateTime user_join_date, UserStatus user_status,
-                   String user_phone_number, String email, String companyName){
-        super(user_id,  username, password, user_join_date, user_status, user_phone_number, email);
+                   String user_phone_number, String email, List<Role> roles, String companyName){
+        super(user_id,  username, password, user_join_date, user_status, user_phone_number, email, roles);
         this.companyName = companyName;
     }
 

@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -25,14 +26,14 @@ class ApplicantMapperTest {
         ApplicantDTO applicantDTO = new ApplicantDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com", List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
 
         Applicant applicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(), "Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         //when
         Applicant result = applicantMapper.toEntity(applicantDTO);
         //then
@@ -45,13 +46,13 @@ class ApplicantMapperTest {
         Applicant applicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), new ApplicantProfile());
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8),  List.of(),null);
         //when
         ApplicantResponseDTO result = applicantMapper.toResponseDTO(applicant);
         //then

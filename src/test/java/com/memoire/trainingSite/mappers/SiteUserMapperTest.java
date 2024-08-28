@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -23,12 +24,12 @@ class SiteUserMapperTest {
         UserDTO userDTO = new UserDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com", List.of());
 
         SiteUser user = new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         //when
         SiteUser result = userMapper.toEntity(userDTO);
         //then
@@ -41,11 +42,11 @@ class SiteUserMapperTest {
         SiteUser user = new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         //when
         UserResponseDTO result = userMapper.toResponseDTO(user);
         //then

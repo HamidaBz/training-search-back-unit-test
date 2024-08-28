@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
@@ -28,8 +29,8 @@ class ApplicantRepoTest {
         Applicant applicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                 LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com", List.of(),"Hamida","Bouaziz",
+                 LocalDate.of(1990,9,8), List.of(),null);
         applicantRepo.save(applicant);
         String username = "Hami";
         //when
@@ -53,8 +54,8 @@ class ApplicantRepoTest {
         Applicant applicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         applicantRepo.save(applicant);
 
         String username = "Hami";

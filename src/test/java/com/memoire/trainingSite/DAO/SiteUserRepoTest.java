@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -29,7 +30,7 @@ class SiteUserRepoTest {
         SiteUser user = new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         siteUserRepo.save(user);
         String username = "Hami";
         //when
@@ -53,7 +54,7 @@ class SiteUserRepoTest {
         SiteUser user = new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com");
+                "hami.bouaziz@gmail.com",List.of());
         siteUserRepo.save(user);
 
         String username = "Hami";

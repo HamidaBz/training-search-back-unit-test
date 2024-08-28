@@ -42,14 +42,14 @@ class ApplicantControllerTest {
         ApplicantResponseDTO applicantResponseDTO_1 = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
 
         ApplicantResponseDTO applicantResponseDTO_2 = new ApplicantResponseDTO(
                 null,"Houhou",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com","Houhou","Bouaziz",
-                LocalDate.of(1995,7,1), null);
+                "houhou.bouaziz@gmail.com",List.of(),"Houhou","Bouaziz",
+                LocalDate.of(1995,7,1), List.of(),null);
 
         when(applicantService.getApplicants()).thenReturn(List.of(applicantResponseDTO_1,applicantResponseDTO_2));
 
@@ -67,15 +67,15 @@ class ApplicantControllerTest {
         ApplicantDTO applicantDTO =new ApplicantDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         String applicantJSON = objectMapper.writeValueAsString(applicantDTO);
 
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
 
         //when
         when(applicantService.createApplicant(applicantDTO)).thenReturn(applicantResponseDTO);
@@ -101,8 +101,8 @@ class ApplicantControllerTest {
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
                 applicantId,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         //when
         when(applicantService.getApplicantById(applicantId)).thenReturn(Optional.of(applicantResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/applicants/1"));
@@ -133,16 +133,16 @@ class ApplicantControllerTest {
         ApplicantDTO applicantDTO = new ApplicantDTO(
                 applicant_id,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         String applicantDTOJson = objectMapper.writeValueAsString(applicantDTO);
 
 
         ApplicantResponseDTO applicantResponseDTO =  new ApplicantResponseDTO(
                 applicant_id,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         //when
         when(applicantService.updateApplicant(applicant_id, applicantDTO)).thenReturn(Optional.of(applicantResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.put("/v1/applicants/1")
@@ -162,8 +162,8 @@ class ApplicantControllerTest {
         ApplicantDTO applicantDTO = new ApplicantDTO(
                 applicant_id,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8));
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         String applicantDTOJson = objectMapper.writeValueAsString(applicantDTO);
 
         //when
@@ -184,8 +184,8 @@ class ApplicantControllerTest {
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com","Hamida","Bouaziz",
-                LocalDate.of(1990,9,8), null);
+                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                LocalDate.of(1990,9,8), List.of(),null);
         //when
         when(applicantService.getApplicantByUsername(username)).thenReturn(Optional.of(applicantResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/applicants/search?username="+username));

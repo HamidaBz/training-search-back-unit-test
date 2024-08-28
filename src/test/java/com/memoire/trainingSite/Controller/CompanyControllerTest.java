@@ -39,13 +39,13 @@ class CompanyControllerTest {
         //given
         CompanyResponseDTO companyResponseDTO_1 = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
                 "H&H Company", new CompanyProfile(), List.of());
 
 
         CompanyResponseDTO companyResponseDTO_2 = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2024,2,10, 1,15),
-                UserStatus.ACTIVE, "0982883762","dd.dd@gmail.com",
+                UserStatus.ACTIVE, "0982883762","dd.dd@gmail.com",List.of(),
                 "DD Company", new CompanyProfile(), List.of());
 
         when(companyService.getCompanies()).thenReturn(List.of(companyResponseDTO_1,companyResponseDTO_2));
@@ -63,13 +63,13 @@ class CompanyControllerTest {
         //given
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
                 "HH Company");
         String companyJSON = objectMapper.writeValueAsString(companyDTO);
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
                 "HH Company", new CompanyProfile(), List.of());
 
         //when
@@ -94,7 +94,7 @@ class CompanyControllerTest {
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(1L,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
                 "HH Company", new CompanyProfile(), List.of());
         //when
         when(companyService.getCompanyById(companyId)).thenReturn(Optional.of(companyResponseDTO));
@@ -124,14 +124,14 @@ class CompanyControllerTest {
         Long company_id = 1L;
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
                 "HH Company");
         String companyDTOJson = objectMapper.writeValueAsString(companyDTO);
 
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
                 "HH Company", new CompanyProfile(), List.of());
         //when
         when(companyService.updateCompany(company_id, companyDTO)).thenReturn(Optional.of(companyResponseDTO));
@@ -151,7 +151,7 @@ class CompanyControllerTest {
         Long company_id = 1L;
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
                 "HH Company");
         String companyDTOJson = objectMapper.writeValueAsString(companyDTO);
 
@@ -172,7 +172,7 @@ class CompanyControllerTest {
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,username,
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
                 "HH Company", new CompanyProfile(), List.of());
         //when
         when(companyService.getCompanyByUsername(username)).thenReturn(Optional.of(companyResponseDTO));

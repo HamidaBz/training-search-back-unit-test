@@ -49,7 +49,8 @@ public class SiteUser {
     )
     private List<Role> roles = new ArrayList<>();
 
-    public SiteUser(Long user_id, String username, String user_password, LocalDateTime user_join_date, UserStatus user_status, String user_phone_number, String email) {
+    public SiteUser(Long user_id, String username, String user_password, LocalDateTime user_join_date,
+                    UserStatus user_status, String user_phone_number, String email, List<Role> roles) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -57,5 +58,6 @@ public class SiteUser {
         this.user_status = user_status;
         this.user_phone_number = user_phone_number;
         this.email = email;
+        this.roles = roles;
     }
 }
