@@ -28,7 +28,7 @@ public class Applicant extends SiteUser {
     @OneToMany(mappedBy = "id_application.applicant", fetch = FetchType.LAZY)
     private List<Application> applications;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "applicant_profile_fk")
     private ApplicantProfile applicantProfile ;
 
