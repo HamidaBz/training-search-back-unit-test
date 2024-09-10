@@ -7,21 +7,28 @@ import com.memoire.trainingSite.models.CompanyProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CompanyProfileService {
     private CompanyProfileRepo companyProfileRepo ;
     @Autowired
-    public CompanyProfileService(CompanyProfileRepo companyProfileRepo) { this.companyProfileRepo = companyProfileRepo; }
-    public CompanyProfile UpdateCompanyProfile(Long id, CompanyProfile companyProfile) {
-        if (companyProfileRepo.existsById(id)) {
-            return companyProfileRepo.save(companyProfile);
-        } else {
-            throw new IllegalArgumentException( id + " does not exist");
-        }
+    public CompanyProfileService(CompanyProfileRepo companyProfileRepo) {
+        this.companyProfileRepo = companyProfileRepo;
     }
-
-    public CompanyProfile getCompanyProfile(Long id) {
-        return (CompanyProfile) companyProfileRepo.findById(id).orElseThrow(() -> new IllegalArgumentException( id + " does not exist"));
-
+    public Optional<CompanyProfile> getCompanyProfileByProfileId(Long profileId) {
+        Optional<CompanyProfile> profile = companyProfileRepo.findById(profileId);
+        return profile;
+    }
+    public Optional<CompanyProfile> getApplicantProfileByCompanyUsername(String username) {
+        Optional<CompanyProfile> companyProfile = companyProfileRepo.findByCompanyUsername(username);
+        return companyProfile;
+    }
+    public Optional<CompanyProfile> UpdateCompanyProfile(Long profileId, CompanyProfile newCompanyProfile) {
+        Optional<CompanyProfile> existingCompanyProfile = companyProfileRepo.findById(profileId);
+        if(existingCompanyProfile.isPresent()){
+            return Optional.of(companyProfileRepo.save(newCompanyProfile));
+        }
+        return Optional.empty();
     }
 }
