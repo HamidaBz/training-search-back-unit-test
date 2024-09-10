@@ -1,5 +1,7 @@
 package com.memoire.trainingSite.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.memoire.trainingSite.Services.ApplicantProfileService;
 import com.memoire.trainingSite.models.Applicant;
 import com.memoire.trainingSite.models.ApplicantProfile;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -17,8 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,6 +31,8 @@ class ApplicantProfileControllerTest {
     ApplicantProfileService applicantProfileService;
     @Autowired
     MockMvc mockMvc;
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     void test_getApplicantProfileByProfileId_when_profile_exists() throws Exception {
@@ -100,6 +104,40 @@ class ApplicantProfileControllerTest {
     }
 
     @Test
-    void updateProfile() {
+    void test_updateProfile_if_profile_exists() throws Exception {
+        //given
+        Long profileId = 1L;
+
+        ApplicantProfile newApplicantProfile = new ApplicantProfile();
+        newApplicantProfile.setProfile_id(profileId);
+        String newApplicantProfileJson = objectMapper.writeValueAsString(newApplicantProfile);
+        when(applicantProfileService.updateProfile(profileId, newApplicantProfile)).thenReturn(Optional.of(newApplicantProfile));
+        //when
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.put("/v1/applicantprofiles/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newApplicantProfileJson));
+        //then
+        verify(applicantProfileService).updateProfile(profileId, newApplicantProfile);
+        result.andExpect(status().isOk());
+    }
+
+    @Test
+    void test_updateProfile_if_profile_does_not_exist() throws Exception {
+        //given
+        Long profileId = 1L;
+
+        ApplicantProfile newApplicantProfile = new ApplicantProfile();
+        newApplicantProfile.setProfile_id(profileId);
+        String newApplicantProfileJson = objectMapper.writeValueAsString(newApplicantProfile);
+        when(applicantProfileService.updateProfile(profileId, newApplicantProfile)).thenReturn(Optional.empty());
+        //when
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.put("/v1/applicantprofiles/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newApplicantProfileJson));
+        //then
+        verify(applicantProfileService).updateProfile(profileId, newApplicantProfile);
+        result.andExpect(status().isNotFound());
     }
 }

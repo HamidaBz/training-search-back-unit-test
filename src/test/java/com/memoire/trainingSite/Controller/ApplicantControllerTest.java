@@ -113,7 +113,7 @@ class ApplicantControllerTest {
     }
 
     @Test
-    void test_getApplicantById_if_doesnot_exists() throws Exception {
+    void test_getApplicantById_if_does_not_exists() throws Exception {
         //given
         Long applicantId = 1L;
 
@@ -155,7 +155,7 @@ class ApplicantControllerTest {
 
 
     @Test
-    void test_updateApplicant_if_doesnot_exist() throws Exception {
+    void test_updateApplicant_if_does_not_exist() throws Exception {
 
         //given
         Long applicant_id = 1L;
