@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -68,10 +69,11 @@ class CompanyProfileControllerTest {
         //given
         String companyUsername = "Hami";
         CompanyProfile companyProfile = new CompanyProfile();
-        companyProfile.setCompany(new Company(1L,companyUsername,"password",
+        Company company = new Company(1L,companyUsername,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
                 UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
-                "H&H Company", companyProfile, List.of()));
+                "H&H Company", null, List.of());
+        companyProfile.setCompany(company);
         when(companyProfileService.getCompanyProfileByCompanyUsername(companyUsername)).
                 thenReturn(Optional.of(companyProfile));
         //when
@@ -80,7 +82,7 @@ class CompanyProfileControllerTest {
         //then
         verify(companyProfileService).getCompanyProfileByCompanyUsername(companyUsername);
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$.company").value(null));
+                .andExpect(jsonPath("$.company.username").value(companyUsername));
     }
 
     @Test
