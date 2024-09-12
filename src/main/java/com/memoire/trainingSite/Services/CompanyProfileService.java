@@ -1,8 +1,6 @@
 package com.memoire.trainingSite.Services;
 
 import com.memoire.trainingSite.DAO.CompanyProfileRepo;
-import com.memoire.trainingSite.DAO.ProfileRepo;
-import com.memoire.trainingSite.models.ApplicantProfile;
 import com.memoire.trainingSite.models.CompanyProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +18,11 @@ public class CompanyProfileService {
         Optional<CompanyProfile> profile = companyProfileRepo.findById(profileId);
         return profile;
     }
-    public Optional<CompanyProfile> getApplicantProfileByCompanyUsername(String username) {
+    public Optional<CompanyProfile> getCompanyProfileByCompanyUsername(String username) {
         Optional<CompanyProfile> companyProfile = companyProfileRepo.findByCompanyUsername(username);
         return companyProfile;
     }
-    public Optional<CompanyProfile> UpdateCompanyProfile(Long profileId, CompanyProfile newCompanyProfile) {
+    public Optional<CompanyProfile> updateCompanyProfile(Long profileId, CompanyProfile newCompanyProfile) {
         Optional<CompanyProfile> existingCompanyProfile = companyProfileRepo.findById(profileId);
         if(existingCompanyProfile.isPresent()){
             return Optional.of(companyProfileRepo.save(newCompanyProfile));

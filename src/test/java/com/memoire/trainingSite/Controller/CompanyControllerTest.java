@@ -64,7 +64,7 @@ class CompanyControllerTest {
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
                 UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
-                "HH Company");
+                "HH Company", null, List.of());
         String companyJSON = objectMapper.writeValueAsString(companyDTO);
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,"H&H",
@@ -125,7 +125,7 @@ class CompanyControllerTest {
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
                 UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
-                "HH Company");
+                "HH Company",new CompanyProfile(), List.of());
         String companyDTOJson = objectMapper.writeValueAsString(companyDTO);
 
 
@@ -152,7 +152,7 @@ class CompanyControllerTest {
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
                 UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
-                "HH Company");
+                "HH Company",new CompanyProfile(), List.of());
         String companyDTOJson = objectMapper.writeValueAsString(companyDTO);
 
         //when

@@ -26,12 +26,12 @@ class CompanyMapperTest {
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
                 UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
-                "H&H Company");
+                "H&H Company", new CompanyProfile(), List.of());
 
         Company company = new Company(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
                 UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
-                "H&H Company");
+                "H&H Company",new CompanyProfile(), List.of());
         //when
         Company result = companyMapper.toEntity(companyDTO);
         //then
@@ -45,7 +45,7 @@ class CompanyMapperTest {
             Company company = new Company(null,"H&H","password",
                     LocalDateTime.of(2020,2,10, 1,15),
                     UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
-                    "H&H Company");
+                    "H&H Company",new CompanyProfile(), List.of());
 
             CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),

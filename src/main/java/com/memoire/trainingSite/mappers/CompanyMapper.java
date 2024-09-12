@@ -17,7 +17,9 @@ public class CompanyMapper {
                 companyDTO.getUser_phone_number(),
                 companyDTO.getEmail(),
                 companyDTO.getRoles(),
-                companyDTO.getCompanyName()
+                companyDTO.getCompanyName(),
+                companyDTO.getCompanyProfile(),
+                companyDTO.getTrainingPositions()
                 );
     }
 
