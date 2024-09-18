@@ -1,12 +1,9 @@
 package com.memoire.trainingSite.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -46,14 +43,10 @@ public class TrainingPosition {
     @OneToMany(mappedBy = "id_notification.position")
     private List<Notification> notifications = new ArrayList<>() ;
 
-
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_fk")
-    private Company company = new Company() ;
+    private Company company;
 
     @Column(name = "position_image")
     private String position_image ;
-
-
 }
