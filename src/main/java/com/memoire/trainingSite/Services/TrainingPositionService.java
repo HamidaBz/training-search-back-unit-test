@@ -40,4 +40,8 @@ public class TrainingPositionService {
     public void deletePosition(Long position_id) {
         trainingPositionRepo.deleteById(position_id);
     }
+
+    public List<TrainingPosition> getPositionsByCompanyId(Long companyId){
+        return trainingPositionRepo.getPositionsByCompanyId(companyId);
+    }
 }

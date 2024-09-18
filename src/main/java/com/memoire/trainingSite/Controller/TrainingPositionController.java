@@ -54,5 +54,10 @@ public class TrainingPositionController {
         trainingPositionService.deletePosition(positionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<TrainingPosition>> getPositionsByCompanyId(@RequestParam Long companyId){
+        List<TrainingPosition> positions = trainingPositionService.getPositionsByCompanyId(companyId);
+        return new ResponseEntity<>(positions, HttpStatus.OK);
+    }
 
 }
