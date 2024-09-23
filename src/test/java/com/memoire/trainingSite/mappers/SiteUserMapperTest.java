@@ -41,11 +41,11 @@ class SiteUserMapperTest {
         //given
         SiteUser user = new SiteUser(
                 null,"Hami","password",
-                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                LocalDateTime.of(2020,10,8,4,2,1), UserStatus.ACTIVE, "0799139309",
                 "hami.bouaziz@gmail.com",List.of());
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 null,"Hami",
-                LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
+                LocalDateTime.of(2020,10,8,4,2,1), UserStatus.ACTIVE, "0799139309",
                 "hami.bouaziz@gmail.com",List.of());
         //when
         UserResponseDTO result = userMapper.toResponseDTO(user);
