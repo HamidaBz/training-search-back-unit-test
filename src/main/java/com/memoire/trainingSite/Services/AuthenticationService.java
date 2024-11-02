@@ -31,12 +31,16 @@ public class AuthenticationService {
     private final SiteUserRepo userRepo ;
     private final CompanyRepo companyRepo;
     private final ApplicantRepo applicantRepo;
-    private PasswordEncoder passwordEncoder;
-    private JWTService jwtService;
+    private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public String registerCompany (RegisterCompanyDTO registerDTO) {
-       Company company =
+        Optional<Company> companyOpt = companyRepo.findByUsername(registerDTO.getUsername());
+        if(companyOpt.isPresent()){
+            return "username exists";
+        }
+        Company company =
                new Company(
                        null,
                        registerDTO.getUsername(),
@@ -55,6 +59,10 @@ public class AuthenticationService {
     }
 
     public String registerApplicant (RegisterApplicantDTO registerDTO) {
+        Optional<Applicant> applicantOpt = applicantRepo.findByUsername(registerDTO.getUsername());
+        if(applicantOpt.isPresent()){
+            return "username exists";
+        }
         Applicant applicant =
                 new Applicant(
                         null,

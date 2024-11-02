@@ -40,13 +40,13 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(toH2Console()).permitAll()
-                        .requestMatchers("/v1/authentication/**").permitAll()
+                        .requestMatchers("v1/authentication/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())//disabling csrf works for now  , but later has to be added as filter .ignoringRequestMatchers(toH2Console())
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults());
-             //   .headers(headers -> headers.frameOptions().disable());
+                .formLogin(Customizer.withDefaults())
+                .headers(headers -> headers.frameOptions().disable());
 
        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

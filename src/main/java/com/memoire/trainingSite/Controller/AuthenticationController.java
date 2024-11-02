@@ -43,10 +43,15 @@ public class AuthenticationController {
 
         String token = authenticationService.registerCompany(registerDTO);
 
-        if(token != null) {
-            return new ResponseEntity<>(new AuthResponseDTO(token) ,  HttpStatus.OK);
-        }else {
+        if(token == null) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }else{
+            if(token.equals("username exists")) {
+                return new ResponseEntity<>(new AuthResponseDTO(token) ,  HttpStatus.FOUND);
+            }else{
+                return new ResponseEntity<>(new AuthResponseDTO(token) ,  HttpStatus.OK);
+            }
+
         }
     }
 

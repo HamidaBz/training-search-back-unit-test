@@ -37,7 +37,7 @@ public class TrainingSiteApplication {
 	@Bean
 	CommandLineRunner initial_processing(){
 		SiteUser user =  new SiteUser(1L,"username", passwordEncoder.encode("password"), LocalDateTime.now(), UserStatus.ACTIVE,
-				"0000000", "jhhhh@gmail.com", List.of(new Role(1,"ADMIN")));
+				"0000000", "jhhhh@gmail.com", Role.ADMIN);
 		userRepo.save(user);
 		return (args)-> {
 

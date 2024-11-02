@@ -18,9 +18,9 @@ public class CompanyResponseDTO extends UserResponseDTO{
     private List<TrainingPosition> trainingPositions;
 
     public CompanyResponseDTO(Long user_id, String username, LocalDateTime user_join_date, UserStatus user_status,
-                              String user_phone_number, String email, List<Role> roles,  String companyName,
+                              String user_phone_number, String email, Role role,  String companyName,
                               CompanyProfile companyProfile, List<TrainingPosition> trainingPositions){
-        super(user_id, username, user_join_date, user_status, user_phone_number, email, roles);
+        super(user_id, username, user_join_date, user_status, user_phone_number, email, role);
         this.companyName = companyName;
         this.companyProfile = companyProfile;
         this.trainingPositions = trainingPositions;

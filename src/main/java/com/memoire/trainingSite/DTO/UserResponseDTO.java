@@ -19,6 +19,6 @@ public class UserResponseDTO {
     private UserStatus user_status;
     private String user_phone_number;
     private String email;
-    private List<Role> roles;
+    private Role role;
 
 }
