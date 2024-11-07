@@ -4,10 +4,15 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -16,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "SiteUser")
-public class SiteUser {
+public class SiteUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long user_id;
@@ -41,16 +46,12 @@ public class SiteUser {
     @OneToMany(mappedBy = "siteUser")
     private List<Alert> alerts = new ArrayList<>() ;
 
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "SiteUser_Roles",
-            joinColumns = @JoinColumn(name = "user_id" , referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id" , referencedColumnName = "id")
-    )
-    private List<Role> roles = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Role role ;
 
     public SiteUser(Long user_id, String username, String user_password, LocalDateTime user_join_date,
-                    UserStatus user_status, String user_phone_number, String email, List<Role> roles) {
+                    UserStatus user_status, String user_phone_number, String email, Role role) {
         this.user_id = user_id;
         this.username = username;
         this.user_password = user_password;
@@ -58,6 +59,36 @@ public class SiteUser {
         this.user_status = user_status;
         this.user_phone_number = user_phone_number;
         this.email = email;
-        this.roles = roles;
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.toString()));
+    }
+
+    @Override
+    public String getPassword() {
+        return user_password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

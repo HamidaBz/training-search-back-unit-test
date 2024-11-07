@@ -23,9 +23,9 @@ public class ApplicantDTO extends UserDTO{
 
     public ApplicantDTO(Long user_id, String username, String password, LocalDateTime user_join_date, UserStatus user_status,
                         String user_phone_number, String email,
-                        List<Role> roles, String applicant_firstname, String applicant_lastname,
+                        Role role, String applicant_firstname, String applicant_lastname,
                         LocalDate applicant_birthday, List<Application> applications, ApplicantProfile applicantProfile){
-        super(user_id, username, password, user_join_date, user_status, user_phone_number, email, roles);
+        super(user_id, username, password, user_join_date, user_status, user_phone_number, email, role);
         this.applicant_firstname = applicant_firstname;
         this.applicant_lastname = applicant_lastname;
         this.applicant_birthday = applicant_birthday;

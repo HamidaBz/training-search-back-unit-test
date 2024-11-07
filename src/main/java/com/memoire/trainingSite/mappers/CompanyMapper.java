@@ -16,8 +16,10 @@ public class CompanyMapper {
                 companyDTO.getUser_status(),
                 companyDTO.getUser_phone_number(),
                 companyDTO.getEmail(),
-                companyDTO.getRoles(),
-                companyDTO.getCompanyName()
+                companyDTO.getRole(),
+                companyDTO.getCompanyName(),
+                companyDTO.getCompanyProfile(),
+                companyDTO.getTrainingPositions()
                 );
     }
 
@@ -29,7 +31,7 @@ public class CompanyMapper {
                 company.getUser_status(),
                 company.getUser_phone_number(),
                 company.getEmail(),
-                company.getRoles(),
+                company.getRole(),
                 company.getCompanyName(),
                 company.getCompanyProfile(),
                 company.getTrainingPositions()

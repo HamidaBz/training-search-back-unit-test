@@ -1,5 +1,12 @@
 package com.memoire.trainingSite.DAO;
 
-public interface CompanyProfileRepo extends ProfileRepo {
-    // You can add custom query methods here if needed
+import com.memoire.trainingSite.models.CompanyProfile;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
+
+public interface CompanyProfileRepo extends JpaRepository<CompanyProfile, Long> {
+    @Query("SELECT cp from CompanyProfile  cp  WHERE cp.company.username = :companyUsername")
+    Optional<CompanyProfile> findByCompanyUsername(String companyUsername);
 }

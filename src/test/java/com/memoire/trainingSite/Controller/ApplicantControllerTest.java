@@ -5,11 +5,15 @@ import com.memoire.trainingSite.DTO.ApplicantDTO;
 import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
 import com.memoire.trainingSite.models.UserStatus;
+import com.memoire.trainingSite.security.JWTService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,11 +28,14 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@WebMvcTest(ApplicantController.class)
+@WebMvcTest({ApplicantController.class, JWTService.class})
 class ApplicantControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    JWTService jwtService;
 
     @MockBean
     ApplicantService applicantService;
@@ -113,7 +120,7 @@ class ApplicantControllerTest {
     }
 
     @Test
-    void test_getApplicantById_if_doesnot_exists() throws Exception {
+    void test_getApplicantById_if_does_not_exists() throws Exception {
         //given
         Long applicantId = 1L;
 
@@ -155,7 +162,7 @@ class ApplicantControllerTest {
 
 
     @Test
-    void test_updateApplicant_if_doesnot_exist() throws Exception {
+    void test_updateApplicant_if_does_not_exist() throws Exception {
 
         //given
         Long applicant_id = 1L;
@@ -211,12 +218,18 @@ class ApplicantControllerTest {
     void test_deleteApplicant() throws Exception {
         //given
         Long applicant_id = 1L;
-
+       Authentication authentication = new UsernamePasswordAuthenticationToken("username", "password");
+       String jwtToken = jwtService.generateToken(authentication);
+        System.out.println(" token  : "  +jwtToken);
         //when
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.delete("/v1/applicants/"+applicant_id));
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.delete("/v1/applicants/"+applicant_id)
+                       .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
+                      );
 
         //then
         verify(applicantService).deleteApplicant(applicant_id);
         result.andExpect(status().isNoContent());
     }
+
 }

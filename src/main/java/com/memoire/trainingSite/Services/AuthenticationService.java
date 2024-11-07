@@ -1,36 +1,101 @@
 package com.memoire.trainingSite.Services;
 
+import com.memoire.trainingSite.DAO.ApplicantRepo;
+import com.memoire.trainingSite.DAO.CompanyRepo;
 import com.memoire.trainingSite.DAO.SiteUserRepo;
-import com.memoire.trainingSite.DTO.RegisterDTO;
-import com.memoire.trainingSite.models.SiteUser;
+import com.memoire.trainingSite.DTO.AuthResponseDTO;
+import com.memoire.trainingSite.DTO.LoginDTO;
+import com.memoire.trainingSite.DTO.RegisterApplicantDTO;
+import com.memoire.trainingSite.DTO.RegisterCompanyDTO;
+import com.memoire.trainingSite.models.*;
+import com.memoire.trainingSite.security.JWTService;
+import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.LogManager;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthenticationService {
+    private final SiteUserRepo userRepo ;
+    private final CompanyRepo companyRepo;
+    private final ApplicantRepo applicantRepo;
+    private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    private SiteUserRepo userRepo ;
+    public String registerCompany (RegisterCompanyDTO registerDTO) {
+        Optional<Company> companyOpt = companyRepo.findByUsername(registerDTO.getUsername());
+        if(companyOpt.isPresent()){
+            return "username exists";
+        }
+        Company company =
+               new Company(
+                       null,
+                       registerDTO.getUsername(),
+                       passwordEncoder.encode(registerDTO.getPassword()),
+                       LocalDateTime.now(),
+                       UserStatus.ACTIVE,
+                       registerDTO.getPhone_number(),
+                       registerDTO.getEmail(),
+                       Role.COMPANY,
+                       registerDTO.getCompanyName(),
+                       new CompanyProfile(),
+                       List.of());
+        companyRepo.save(company);
+        return authenticate(new LoginDTO( registerDTO.getUsername(),registerDTO.getPassword()));
 
-    AuthenticationService(SiteUserRepo userRepo){
-        this.userRepo = userRepo;
     }
 
-    public boolean authenticate(RegisterDTO authrequest) {
-        System.out.println("used the authentication contoller");
-
-
-        String um = authrequest.getUsername() ;
-
-        Optional<SiteUser> user = userRepo.findByUsername(um);
-        if (user.isEmpty()) {
-            System.out.println("user is null");
+    public String registerApplicant (RegisterApplicantDTO registerDTO) {
+        Optional<Applicant> applicantOpt = applicantRepo.findByUsername(registerDTO.getUsername());
+        if(applicantOpt.isPresent()){
+            return "username exists";
         }
+        Applicant applicant =
+                new Applicant(
+                        null,
+                        registerDTO.getUsername(),
+                        passwordEncoder.encode(registerDTO.getPassword()),
+                        LocalDateTime.now(),
+                        UserStatus.ACTIVE,
+                        registerDTO.getPhone_number(),
+                        registerDTO.getEmail(),
+                        Role.APPLICANT,
+                        registerDTO.getFirstname(),
+                        registerDTO.getLastname(),
+                        registerDTO.getBirthday(),
+                        List.of(),
+                        new ApplicantProfile());
+        applicantRepo.save(applicant);
+        return authenticate(new LoginDTO( registerDTO.getUsername(),registerDTO.getPassword()));
 
-        if (user.get().getUsername().equals("aymene22k@gmail.com")) {
-            return true; // Authentication successful
-        } else {
-            return false; // Authentication failed
+    }
+
+    public String authenticate(LoginDTO loginDTO) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginDTO.getUsername(),
+                        loginDTO.getPassword()));
+
+        //this is so the user doesnt have to log in every time
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Optional<SiteUser> userOpt = userRepo.findByUsername(loginDTO.getUsername());
+        String token = null;
+        if(userOpt.isPresent()) {
+            token = jwtService.generateToken(new HashMap<>(), userOpt.get());
         }
+        return token;
     }
 }

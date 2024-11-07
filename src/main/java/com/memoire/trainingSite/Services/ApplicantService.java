@@ -28,8 +28,8 @@ public class ApplicantService {
         return applicantMapper.toResponseDTO(applicantRepo.save(applicant));
 
     }
-    public Optional<ApplicantResponseDTO> getApplicantById(Long id) {
-        return applicantRepo.findById(id).map(applicantMapper::toResponseDTO);
+    public Optional<ApplicantResponseDTO> getApplicantById(Long applicant_id) {
+        return applicantRepo.findById(applicant_id).map(applicantMapper::toResponseDTO);
     }
 
     public Optional<ApplicantResponseDTO> getApplicantByUsername(String username){
@@ -43,8 +43,8 @@ public class ApplicantService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<ApplicantResponseDTO> updateApplicant(Long id, ApplicantDTO updatedApplicantDTO) {
-        Optional<Applicant> applicant =  applicantRepo.findById(id);
+    public Optional<ApplicantResponseDTO> updateApplicant(Long applicant_id, ApplicantDTO updatedApplicantDTO) {
+        Optional<Applicant> applicant =  applicantRepo.findById(applicant_id);
 
         if(applicant.isPresent()){
             Applicant  updatedApplicant = applicantMapper.toEntity(updatedApplicantDTO);
@@ -54,8 +54,8 @@ public class ApplicantService {
         return Optional.empty();
     }
 
-    public void deleteApplicant(Long id) {
-        applicantRepo.deleteById(id);
+    public void deleteApplicant(Long applicant_id) {
+        applicantRepo.deleteById(applicant_id);
     }
 
 }

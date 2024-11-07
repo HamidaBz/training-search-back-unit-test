@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResigterRequest {
+public class RegisterCompanyDTO {
 
         private String username;
         private String password;
+        private String phone_number;
         private String email;
         private String role;
+        private String companyName;
 }

@@ -19,14 +19,14 @@ public class ApplicantProfileController {
     }
 
     @GetMapping("/{profileId}")
-    public ResponseEntity<ApplicantProfile> getApplicantProfile(@PathVariable Long profileId) {
+    public ResponseEntity<ApplicantProfile> getApplicantProfileByProfileId(@PathVariable Long profileId) {
         Optional<ApplicantProfile> profile = applicantProfileService.getApplicantProfileByProfileId(profileId);
         return profile.map(pf -> new ResponseEntity<>(pf, HttpStatus.OK))
                 .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ApplicantProfile> getApplicantProfile(@RequestParam String applicantUsername) {
+    public ResponseEntity<ApplicantProfile> getApplicantProfileByApplicantUsername(@RequestParam String applicantUsername) {
         Optional<ApplicantProfile> profile = applicantProfileService.getApplicantProfileByApplicantUsername(applicantUsername);
         return profile.map(pf -> new ResponseEntity<>(pf, HttpStatus.OK))
                 .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
