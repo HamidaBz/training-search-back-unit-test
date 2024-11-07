@@ -1,12 +1,16 @@
 package com.memoire.trainingSite.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.memoire.trainingSite.DAO.SiteUserRepo;
 import com.memoire.trainingSite.Services.CompanyProfileService;
+import com.memoire.trainingSite.config.TestSecurityConfig;
 import com.memoire.trainingSite.models.*;
+import com.memoire.trainingSite.security.JWTService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -24,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CompanyProfileController.class)
+@Import(TestSecurityConfig.class)
 class CompanyProfileControllerTest {
     @MockBean
     CompanyProfileService companyProfileService;
@@ -31,6 +36,10 @@ class CompanyProfileControllerTest {
     MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
+    @MockBean
+    SiteUserRepo userRepo;  // userRepo et jwtService sont utilisé apar le mockuser
+    @MockBean
+    JWTService jwtService;
 
     @Test
     void test_getCompanyProfileByProfileId_when_profile_exists() throws Exception {
@@ -71,7 +80,7 @@ class CompanyProfileControllerTest {
         CompanyProfile companyProfile = new CompanyProfile();
         Company company = new Company(1L,companyUsername,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company", null, List.of());
         companyProfile.setCompany(company);
         when(companyProfileService.getCompanyProfileByCompanyUsername(companyUsername)).

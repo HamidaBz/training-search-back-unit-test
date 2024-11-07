@@ -6,6 +6,7 @@ import com.memoire.trainingSite.DTO.UserResponseDTO;
 import com.memoire.trainingSite.Services.SiteUserService;
 import com.memoire.trainingSite.mappers.SiteUserMapper;
 import com.memoire.trainingSite.models.Applicant;
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.SiteUser;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.Test;
@@ -39,17 +40,17 @@ class SiteUserServiceTest {
         UserDTO userDTO = new UserDTO(
                 null,username,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com", Role.USER);
 
         SiteUser user = new SiteUser(
                 null,username,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
 
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 null,username,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
 
 
         when(siteUserMapper.toEntity(userDTO)).thenReturn(user);
@@ -72,13 +73,13 @@ class SiteUserServiceTest {
         SiteUser user =  new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         user.setUser_id(userId);
 
         UserResponseDTO userResponseDTO =  new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         userResponseDTO.setUser_id(userId);
 
         when(siteUserRepo.findById(userId)).thenReturn(Optional.of(user));
@@ -112,13 +113,13 @@ class SiteUserServiceTest {
         SiteUser user = new SiteUser(
                 null,existingUsername,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
        // applicant.setUsername(existingUsername);
 
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 null,existingUsername,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         //applicantResponseDTO.setUsername(existingUsername);
 
         when(siteUserMapper.toResponseDTO(user)).thenReturn(userResponseDTO);
@@ -153,22 +154,22 @@ class SiteUserServiceTest {
         SiteUser user_1 = new SiteUser(
                 null,"Hami",null,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
 
         SiteUser user_2 = new SiteUser(
                 null,"Houhou", null,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com",List.of());
+                "houhou.bouaziz@gmail.com",Role.USER);
 
         UserResponseDTO userResponseDTO_1 = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com", Role.USER);
 
         UserResponseDTO userResponseDTO_2 = new UserResponseDTO(
                 null,"Houhou",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com",List.of());
+                "houhou.bouaziz@gmail.com",Role.USER);
 
         when(siteUserRepo.findAll()).thenReturn(List.of(user_1,user_2));
         when(siteUserMapper.toResponseDTO(user_1)).thenReturn(userResponseDTO_1);
@@ -189,25 +190,25 @@ class SiteUserServiceTest {
         SiteUser existingUser = new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         existingUser.setUser_id(userId);
 
         UserDTO updatedUserDTO = new UserDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         updatedUserDTO.setUser_id(userId);
 
         SiteUser updatedUser = new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         updatedUser.setUser_id(userId);
 
         UserResponseDTO updatedUserResponseDTO = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         updatedUserResponseDTO.setUser_id(userId);
 
 
@@ -232,7 +233,7 @@ class SiteUserServiceTest {
         UserDTO updatedUserDTO = new UserDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139308",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         updatedUserDTO.setUser_id(userId);
 
 

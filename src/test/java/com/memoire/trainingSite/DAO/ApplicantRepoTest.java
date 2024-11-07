@@ -1,6 +1,7 @@
 package com.memoire.trainingSite.DAO;
 
 import com.memoire.trainingSite.models.Applicant;
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class ApplicantRepoTest {
         Applicant applicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com", List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com", Role.APPLICANT,"Hamida","Bouaziz",
                  LocalDate.of(1990,9,8), List.of(),null);
         applicantRepo.save(applicant);
         String username = "Hami";
@@ -54,7 +55,7 @@ class ApplicantRepoTest {
         Applicant applicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT, "Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
         applicantRepo.save(applicant);
 

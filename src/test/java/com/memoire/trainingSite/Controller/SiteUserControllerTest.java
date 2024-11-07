@@ -1,15 +1,21 @@
 package com.memoire.trainingSite.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.memoire.trainingSite.DAO.SiteUserRepo;
 import com.memoire.trainingSite.DTO.UserDTO;
 import com.memoire.trainingSite.DTO.UserResponseDTO;
 import com.memoire.trainingSite.Services.SiteUserService;
+import com.memoire.trainingSite.config.TestSecurityConfig;
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.UserStatus;
+import com.memoire.trainingSite.security.JWTService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -21,9 +27,13 @@ import java.util.Optional;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @WebMvcTest(SiteUserController.class)
+@Import(TestSecurityConfig.class)
 class SiteUserControllerTest {
+    @MockBean
+    SiteUserRepo userRepo;  // userRepo et jwtService sont utilisé apar le mockuser
+    @MockBean
+    JWTService jwtService;
     @Autowired
     MockMvc mockMvc;
     @MockBean
@@ -38,12 +48,12 @@ class SiteUserControllerTest {
         UserResponseDTO userResponseDTO_1 = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com", Role.USER);
 
         UserResponseDTO userResponseDTO_2 = new UserResponseDTO(
                 null,"Houhou",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com",List.of());
+                "houhou.bouaziz@gmail.com",Role.USER);
 
         when(userService.getAllUsers()).thenReturn(List.of(userResponseDTO_1,userResponseDTO_2));
 
@@ -61,13 +71,13 @@ class SiteUserControllerTest {
         UserDTO userDTO =new UserDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         String applicantJSON = objectMapper.writeValueAsString(userDTO);
 
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
 
         //when
         when(userService.createUser(userDTO)).thenReturn(userResponseDTO);
@@ -91,7 +101,7 @@ class SiteUserControllerTest {
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 userId,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         //when
         when(userService.getUserById(userId)).thenReturn(Optional.of(userResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/users/1"));
@@ -122,14 +132,14 @@ class SiteUserControllerTest {
         UserDTO userDTO = new UserDTO(
                 user_id,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         String userDTOJson = objectMapper.writeValueAsString(userDTO);
 
 
         UserResponseDTO userResponseDTO =  new UserResponseDTO(
                 user_id,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         //when
         when(userService.updateUser(user_id, userDTO)).thenReturn(Optional.of(userResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.put("/v1/users/1")
@@ -149,7 +159,7 @@ class SiteUserControllerTest {
         UserDTO userDTO = new UserDTO(
                 user_id,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         String userDTOJson = objectMapper.writeValueAsString(userDTO);
 
         //when
@@ -170,7 +180,7 @@ class SiteUserControllerTest {
         UserResponseDTO userResponseDTO = new UserResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         //when
         when(userService.getUserByUsername(username)).thenReturn(Optional.of(userResponseDTO));
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/v1/users/search?username="+username));
@@ -197,9 +207,9 @@ class SiteUserControllerTest {
         //given
         Long user_id = 1L;
 
+
         //when
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.delete("/v1/users/"+user_id));
-
         //then
         verify(userService).deleteUser(user_id);
         result.andExpect(status().isNoContent());
