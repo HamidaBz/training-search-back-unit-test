@@ -2,14 +2,19 @@ package com.memoire.trainingSite.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.memoire.trainingSite.DAO.SiteUserRepo;
 import com.memoire.trainingSite.Services.ApplicantProfileService;
+import com.memoire.trainingSite.config.TestSecurityConfig;
 import com.memoire.trainingSite.models.Applicant;
 import com.memoire.trainingSite.models.ApplicantProfile;
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.UserStatus;
+import com.memoire.trainingSite.security.JWTService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -25,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ApplicantProfileController.class)
+@Import(TestSecurityConfig.class)
 class ApplicantProfileControllerTest {
 
     @MockBean
@@ -33,6 +39,10 @@ class ApplicantProfileControllerTest {
     MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
+    @MockBean
+    SiteUserRepo userRepo;  // userRepo et jwtService sont utilisé apar le mockuser
+    @MockBean
+    JWTService jwtService;
 
     @Test
     void test_getApplicantProfileByProfileId_when_profile_exists() throws Exception {
@@ -74,7 +84,7 @@ class ApplicantProfileControllerTest {
         applicantprofile.setApplicant(new Applicant(
                 1L,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com", List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com", Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null));
         when(applicantProfileService.getApplicantProfileByApplicantUsername(applicantUsername)).
                 thenReturn(Optional.of(applicantprofile));

@@ -56,6 +56,11 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.11.5</version>
@@ -88,13 +93,12 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
+		<!--	<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<excludes>
-						<!--<exclude>**/com/memoire/trainingSite/security/**</exclude>-->
-						<exclude>**/test/**</exclude>
+						<exclude>**/test/java/com/memoire/trainingSite/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -103,11 +107,11 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<excludes>
-						<!--<exclude>**/com/memoire/trainingSite/security/**</exclude>-->
-						<exclude>**/test/**</exclude>
+						<exclude>**/test/java/com/memoire/trainingSite/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
+-->
 
 
 			<plugin>

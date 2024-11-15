@@ -2,6 +2,7 @@ package com.memoire.trainingSite.DAO;
 
 import com.memoire.trainingSite.models.Company;
 import com.memoire.trainingSite.models.CompanyProfile;
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class CompanyRepoTest {
         String username = "H&H";
         Company company = new Company(null,username,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com", List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com", Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
         companyRepo.save(company);
 
@@ -58,7 +59,7 @@ class CompanyRepoTest {
         String username = "H&H";
         Company company = new Company(null,username,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
         companyRepo.save(company);
 

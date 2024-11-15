@@ -1,15 +1,20 @@
 package com.memoire.trainingSite.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.memoire.trainingSite.DAO.SiteUserRepo;
 import com.memoire.trainingSite.DTO.CompanyDTO;
 import com.memoire.trainingSite.DTO.CompanyResponseDTO;
 import com.memoire.trainingSite.Services.CompanyService;
+import com.memoire.trainingSite.config.TestSecurityConfig;
 import com.memoire.trainingSite.models.CompanyProfile;
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.UserStatus;
+import com.memoire.trainingSite.security.JWTService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -24,6 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CompanyController.class)
+@Import(TestSecurityConfig.class)
 class CompanyControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -32,20 +38,23 @@ class CompanyControllerTest {
     CompanyService companyService;
     @Autowired
     ObjectMapper objectMapper; //used to convert objects to Json
-
+    @MockBean
+    SiteUserRepo userRepo;  // userRepo et jwtService sont utilisé apar le mockuser
+    @MockBean
+    JWTService jwtService;
     @Test
     void test_getCompanies() throws Exception {
 
         //given
         CompanyResponseDTO companyResponseDTO_1 = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com", Role.COMPANY,
                 "H&H Company", new CompanyProfile(), List.of());
 
 
         CompanyResponseDTO companyResponseDTO_2 = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2024,2,10, 1,15),
-                UserStatus.ACTIVE, "0982883762","dd.dd@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0982883762","dd.dd@gmail.com",Role.COMPANY,
                 "DD Company", new CompanyProfile(), List.of());
 
         when(companyService.getCompanies()).thenReturn(List.of(companyResponseDTO_1,companyResponseDTO_2));
@@ -63,13 +72,13 @@ class CompanyControllerTest {
         //given
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company", null, List.of());
         String companyJSON = objectMapper.writeValueAsString(companyDTO);
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company", new CompanyProfile(), List.of());
 
         //when
@@ -94,7 +103,7 @@ class CompanyControllerTest {
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(1L,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company", new CompanyProfile(), List.of());
         //when
         when(companyService.getCompanyById(companyId)).thenReturn(Optional.of(companyResponseDTO));
@@ -124,14 +133,14 @@ class CompanyControllerTest {
         Long company_id = 1L;
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company",new CompanyProfile(), List.of());
         String companyDTOJson = objectMapper.writeValueAsString(companyDTO);
 
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company", new CompanyProfile(), List.of());
         //when
         when(companyService.updateCompany(company_id, companyDTO)).thenReturn(Optional.of(companyResponseDTO));
@@ -151,7 +160,7 @@ class CompanyControllerTest {
         Long company_id = 1L;
         CompanyDTO companyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company",new CompanyProfile(), List.of());
         String companyDTOJson = objectMapper.writeValueAsString(companyDTO);
 
@@ -172,7 +181,7 @@ class CompanyControllerTest {
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,username,
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company", new CompanyProfile(), List.of());
         //when
         when(companyService.getCompanyByUsername(username)).thenReturn(Optional.of(companyResponseDTO));

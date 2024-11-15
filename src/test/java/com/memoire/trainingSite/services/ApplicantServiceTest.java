@@ -6,6 +6,7 @@ import com.memoire.trainingSite.DTO.ApplicantResponseDTO;
 import com.memoire.trainingSite.Services.ApplicantService;
 import com.memoire.trainingSite.mappers.ApplicantMapper;
 import com.memoire.trainingSite.models.Applicant;
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,19 +40,19 @@ public class ApplicantServiceTest {
         ApplicantDTO applicantDTO = new ApplicantDTO(
                 null,username,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com", Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
 
         Applicant applicant = new Applicant(
                 null,username,"password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
 
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
                 null,username,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
 
 
@@ -75,14 +76,14 @@ public class ApplicantServiceTest {
         Applicant applicant =  new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
         applicant.setUser_id(applicantId);
 
         ApplicantResponseDTO applicantResponseDTO =  new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com", List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com", Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
         applicantResponseDTO.setUser_id(applicantId);
 
@@ -119,14 +120,14 @@ public class ApplicantServiceTest {
         Applicant applicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
         applicant.setUsername(existingUsername);
 
         ApplicantResponseDTO applicantResponseDTO = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
         applicantResponseDTO.setUsername(existingUsername);
 
@@ -162,25 +163,25 @@ public class ApplicantServiceTest {
         Applicant applicant_1 = new Applicant(
                 null,"Hami",null,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
 
         Applicant applicant_2 = new Applicant(
                 null,"Houhou", null,
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com",List.of(),"Houhou","Bouaziz",
+                "houhou.bouaziz@gmail.com",Role.APPLICANT,"Houhou","Bouaziz",
                 LocalDate.of(1995,7,1), List.of(),null);
 
         ApplicantResponseDTO applicantResponseDTO_1 = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
 
         ApplicantResponseDTO applicantResponseDTO_2 = new ApplicantResponseDTO(
                 null,"Houhou",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0982883762",
-                "houhou.bouaziz@gmail.com",List.of(),"Houhou","Bouaziz",
+                "houhou.bouaziz@gmail.com",Role.APPLICANT,"Houhou","Bouaziz",
                 LocalDate.of(1995,7,1), List.of(),null);
 
         when(applicantRepo.findAll()).thenReturn(List.of(applicant_1,applicant_2));
@@ -202,28 +203,28 @@ public class ApplicantServiceTest {
         Applicant existedApplicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
         existedApplicant.setUser_id(applicantId);
 
         ApplicantDTO updatedApplicantDTO = new ApplicantDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1995,9,8), List.of(),null);
         updatedApplicantDTO.setUser_id(applicantId);
 
         Applicant updatedApplicant = new Applicant(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1995,9,8), List.of(),null);
         updatedApplicant.setUser_id(applicantId);
 
         ApplicantResponseDTO updatedApplicantResponseDTO = new ApplicantResponseDTO(
                 null,"Hami",
                 LocalDateTime.now(), UserStatus.ACTIVE, "06712237373",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1995,9,8), List.of(),null);
         updatedApplicantResponseDTO.setUser_id(applicantId);
 
@@ -249,7 +250,7 @@ public class ApplicantServiceTest {
         ApplicantDTO updatedApplicantDTO = new ApplicantDTO(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139308",
-                "hami.bouaziz@gmail.com",List.of(),"Hamida","Bouaziz",
+                "hami.bouaziz@gmail.com",Role.APPLICANT,"Hamida","Bouaziz",
                 LocalDate.of(1990,9,8), List.of(),null);
         updatedApplicantDTO.setUser_id(applicantId);
 

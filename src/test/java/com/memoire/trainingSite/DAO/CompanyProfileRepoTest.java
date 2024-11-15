@@ -31,7 +31,7 @@ class CompanyProfileRepoTest {
         CompanyProfile companyProfile = new CompanyProfile();
         Company company = new Company(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company", companyProfile, List.of());
 
         companyProfile.setCompany(company);

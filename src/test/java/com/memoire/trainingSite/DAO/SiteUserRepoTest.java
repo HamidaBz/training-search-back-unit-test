@@ -1,6 +1,7 @@
 package com.memoire.trainingSite.DAO;
 
 
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.SiteUser;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.AfterEach;
@@ -30,7 +31,7 @@ class SiteUserRepoTest {
         SiteUser user = new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com", Role.USER);
         siteUserRepo.save(user);
         String username = "Hami";
         //when
@@ -54,7 +55,7 @@ class SiteUserRepoTest {
         SiteUser user = new SiteUser(
                 null,"Hami","password",
                 LocalDateTime.now(), UserStatus.ACTIVE, "0799139309",
-                "hami.bouaziz@gmail.com",List.of());
+                "hami.bouaziz@gmail.com",Role.USER);
         siteUserRepo.save(user);
 
         String username = "Hami";

@@ -7,6 +7,7 @@ import com.memoire.trainingSite.Services.CompanyService;
 import com.memoire.trainingSite.mappers.CompanyMapper;
 import com.memoire.trainingSite.models.Company;
 import com.memoire.trainingSite.models.CompanyProfile;
+import com.memoire.trainingSite.models.Role;
 import com.memoire.trainingSite.models.UserStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,17 +40,17 @@ class CompanyServiceTest {
 
         CompanyDTO companyDTO = new CompanyDTO(null,username,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com", Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
 
         Company company = new Company(null,username,"password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,username,
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company", new CompanyProfile(), List.of());
 
         when(companyMapper.toEntity(companyDTO)).thenReturn(company);
@@ -71,13 +72,13 @@ class CompanyServiceTest {
 
         Company company =  new Company(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
         company.setUser_id(companyId);
 
         CompanyResponseDTO companyResponseDTO =  new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company", new CompanyProfile(), List.of());
         companyResponseDTO.setUser_id(companyId);
 
@@ -113,13 +114,13 @@ class CompanyServiceTest {
         String existingUsername = "existingUsername";
         Company company = new Company(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
         company.setUsername(existingUsername);
 
         CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company", new CompanyProfile(), List.of());
         companyResponseDTO.setUsername(existingUsername);
 
@@ -155,22 +156,22 @@ class CompanyServiceTest {
         //given
         Company company_1 = new Company(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
 
         Company company_2 = new Company(null,"DD","password",
                 LocalDateTime.of(2024,2,10, 1,15),
-                UserStatus.ACTIVE, "0982883762","dd.dd@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0982883762","dd.dd@gmail.com",Role.COMPANY,
                 "DD Company",new CompanyProfile(), List.of());
 
         CompanyResponseDTO companyResponseDTO_1 = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company", new CompanyProfile(), List.of());
 
         CompanyResponseDTO companyResponseDTO_2 = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2024,2,10, 1,15),
-                UserStatus.ACTIVE, "0982883762","dd.dd@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0982883762","dd.dd@gmail.com",Role.COMPANY,
                 "DD Company", new CompanyProfile(), List.of());
 
         when(companyRepo.findAll()).thenReturn(List.of(company_1,company_2));
@@ -191,25 +192,25 @@ class CompanyServiceTest {
 
         Company existedCompany =  new Company(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
         existedCompany.setUser_id(companyId);
 
         CompanyDTO updatedCompanyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company",new CompanyProfile(), List.of());
 
         updatedCompanyDTO.setUser_id(companyId);
 
         Company updatedCompany =   new Company(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company",new CompanyProfile(), List.of());
 
         CompanyResponseDTO updatedCompanyResponseDTO = new CompanyResponseDTO(null,"H&H",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0765245636","h.h@gmail.com",Role.COMPANY,
                 "HH Company", new CompanyProfile(), List.of());
         updatedCompanyResponseDTO.setUser_id(companyId);
 
@@ -234,7 +235,7 @@ class CompanyServiceTest {
 
         CompanyDTO updatedCompanyDTO = new CompanyDTO(null,"H&H","password",
                 LocalDateTime.of(2020,2,10, 1,15),
-                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",List.of(),
+                UserStatus.ACTIVE, "0555657585","h.h@gmail.com",Role.COMPANY,
                 "H&H Company",new CompanyProfile(), List.of());
         updatedCompanyDTO.setUser_id(companyId);
 
